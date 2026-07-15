@@ -12,8 +12,14 @@
   "license": "ISC",
   "type": "module",
   "dependencies": {
+    "@azure/identity": "^4.13.1",
+    "docx-parser": "^0.2.1",
     "express": "^5.2.1",
     "mongoose": "^9.7.4",
-    "multer": "^2.2.0"
+    "multer": "^2.2.0",
+    "openai": "^6.47.0",
+    "pdf-parse-fork": "^1.2.0",
+    "pdf-text-reader": "^5.1.1",
+    "unpdf": "^1.6.2"
   }
 }

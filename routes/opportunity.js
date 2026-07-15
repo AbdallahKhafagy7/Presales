@@ -1,6 +1,7 @@
 import express from "express";
 import opportunityRequirementRouter from "./opportunityRequirement.js";
 import requirementFileRouter from "./requirementFile.js";
+import opportunityAnalysisRouter from "./opportunityAnalysis.js";
 import {
   createOpportunity,
   updateOpportunity,
@@ -16,6 +17,9 @@ opportunityRouter.use("/requirements", opportunityRequirementRouter);
 
 // =========== files ===========
 opportunityRouter.use("/files", requirementFileRouter);
+
+// =========== analysis ===========
+opportunityRouter.use("/analysis", opportunityAnalysisRouter);
 
 // =========== opportunities ===========
 opportunityRouter.post("/", createOpportunity);

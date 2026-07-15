@@ -20,7 +20,7 @@ const createOpportunity = async (req, res, next) => {
     if (status) {
       if (status === "ready-for-analysis") {
         throw new AppError(
-          "Opportunity cannot be marked as ready for analysis before adding requirements text or uploading files",
+          "Opportunity cannot be marked as ready for analysis before adding requirements text or uploading files!",
           400,
         );
       }
@@ -66,7 +66,7 @@ const updateOpportunity = async (req, res, next) => {
         const files = await RequirementFile.find({ opportunityId });
         if (!requirement || files.meta.len <= 0) {
           throw new AppError(
-            "Opportunity cannot be marked as ready for analysis before adding requirements text or uploading files",
+            "Opportunity cannot be marked as ready for analysis before adding requirements text or uploading files!",
             400,
           );
         }
