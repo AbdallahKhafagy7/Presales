@@ -64,7 +64,7 @@ const updateOpportunity = async (req, res, next) => {
           opportunityId,
         });
         const files = await RequirementFile.find({ opportunityId });
-        if (!requirement || files.meta.len <= 0) {
+        if (!requirement || files.length <= 0) {
           throw new AppError(
             "Opportunity cannot be marked as ready for analysis before adding requirements text or uploading files!",
             400,
@@ -73,7 +73,6 @@ const updateOpportunity = async (req, res, next) => {
       }
       opportunity.status = status;
     }
-
     await opportunity.save();
     res.json(opportunity);
   } catch (e) {
