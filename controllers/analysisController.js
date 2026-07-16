@@ -8,6 +8,7 @@ import {
   extractFromTxt,
 } from "../utils/parser.js";
 import analyzer from "../utils/analyzer.js";
+import AppError from "../utils/appError.js";
 
 const createAnalysis = async (req, res, next) => {
   try {
@@ -59,8 +60,7 @@ const createAnalysis = async (req, res, next) => {
     }
 
     // get analysis
-    const response = await analyzer(inputs);
-    const analysisParams = JSON.parse(response);
+    const analysisParams = await analyzer(inputs);
 
     // create analysis object
     const analysisObject = await OpportunityAnalysis.create({
