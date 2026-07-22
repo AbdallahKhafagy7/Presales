@@ -1,25 +1,9 @@
-export class AppError extends Error{
-    constructor(message  , statusCode , errorDetails){
+export class ApiError extends Error {
+    constructor(statusCode, message, errors = null) {
         super(message);
-    }
-}
-export class ConflictError extends AppError{
-    constructor( message , errorDetails){
-         super(message,409,errorDetails);
-    }
-}
-export class AuthorityError extends AppError{
-    constructor( message , errorDetails){
-         super(message,401,errorDetails);
-    }
-}
-export class BadRequestError extends AppError{
-    constructor( message , errorDetails){
-         super(message,400,errorDetails);
-    }
-}
-export class NotFoundError extends AppError{
-    constructor( message , errorDetails){
-         super(message,404,errorDetails);
+        this.statusCode = statusCode;
+        this.message = message;
+        this.isOperational = true;  // is the error Opertaional or from the server
+        Error.captureStackTrace(this, this.constructor); // Clean the stack trace
     }
 }
