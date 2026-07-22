@@ -6,6 +6,7 @@ import cors from "cors"
 
 import { globalErrorHandler } from "./utils/middleware/globalErrorHandler.js";
 import { ApiError } from "./utils/error/errorClass.js";
+import { config } from "./config/dev.env.js";
 
 
 
@@ -16,10 +17,9 @@ export async function bootStrap(app, express) {
     // app.use("/opportunities", opportunityAnalysisController)
     // app.use("/requirement", requirementController);
     // app.use("/requirement-file", requirementFileController);
-
     
     app.get("/",(req,res)=>{
-        throw new ApiError(404,"ziad");
+        throw new ApiError(404,"Golbal error + Error class testing");
     })
     //global error handling
     app.use(globalErrorHandler);

@@ -1,13 +1,13 @@
 import express from "express"
 import { connectDB } from "./DB/connection.js";
 import { bootStrap } from "./app.controller.js";
-import { devConfig } from "./config/dev.env.js";
+import { config } from "./config/dev.env.js";
 
 const app = express();
 async function startServer() {    
     connectDB();
     bootStrap(app, express);
-    const port = devConfig.PORT || 3000;
+    const port = config.port || 3000;
     app.listen(port, () => {
         console.log("application is running on port", port);
     });

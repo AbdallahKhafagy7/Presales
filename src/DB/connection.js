@@ -1,12 +1,12 @@
 import mongoose from "mongoose";
-import { devConfig } from "../config/dev.env.js";
+import { config } from "../config/dev.env.js";
 export async function connectDB() {
     
-    if(!devConfig.MONGODB_URI){
+    if(!config.mongoUri){
         
         throw new Error ("MongoDB_URI is not configured");
     }
-    await mongoose.connect(devConfig.MONGODB_URI,{
+    await mongoose.connect(config.mongoUri,{
         timeoutMS:30000,
     }).then(() => {
         console.log("DB connected successfully");
