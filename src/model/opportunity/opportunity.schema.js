@@ -29,12 +29,12 @@ export const opporunitySchema = new Schema({
         required: true,
         minLength: 2,
         trim: true,
-        match: [/^\\S+@\\S+\\.\\S+$/, "Please provide a valid email address"],
+        match: [/^\S+@\S+\.\S+$/, "Please provide a valid email address"],
 
     },
     contactPhone: {
         type: String,
-        match: [/^\\d{11}$/, "Phone number must be exactly 11 digits"],
+        match: [/^\d{11}$/, "Phone number must be exactly 11 digits"],
     },
     generalNotes: {
         type: String,
