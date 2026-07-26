@@ -8,10 +8,13 @@ import { ApiError } from "./utils/error/errorClass.js";
 import { config } from "./config/dev.env.js";
 import baseRouter from "./routes/index.js"
 
+import logger from "./utils/logger.js";
+import pinoHttp from "pino-http";
 
 export async function bootStrap(app, express) {
   app.use(express.json());
   app.use(cors({ origin: "*" }));
+  app.use(pinoHttp({ logger }));
 
   app.use("/api", routes);
   //global error handling
