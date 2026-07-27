@@ -96,13 +96,6 @@ export const deleteOpportunity = async (req, res, next) => {
         throw new NotFoundError("Opportunity not found");
     }
 
-    await OpportunityRequirement.deleteOne({
-        opportunityId: id,
-    });
-
-    await RequirementFile.deleteMany({
-        opportunityId: id,
-    });
 
     await opportunity.deleteOne();
 
