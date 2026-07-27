@@ -1,22 +1,15 @@
-const express = require("express");
-const router = express.Router();
 
-const {
-  createOpportunity,
-  getOpportunities,
-  getOpportunityById,
-  updateOpportunity,
-  deleteOpportunity,
-} = require("../controllers/opportunityController");
+import { Router } from "express";
+import * as opportunityController from "../module/opportunity/opportunity.controller.js";
+import { validate } from "../utils/middleware/zod.validation.js";
+import { createOpportunitySchema, updateOpportunitySchema } from "../module/opportunity/opportunity.validation.js";
+import { objectIdvalidateSchema } from "../module/comman/validation.js";
 
-router.post("/", createOpportunity);
-
-router.get("/", getOpportunities);
-
-router.get("/:id", getOpportunityById);
-
-router.put("/:id", updateOpportunity);
-
-router.delete("/:id", deleteOpportunity);
-
+const router = Router();
+router.post("/create",validate(createOpportunitySchema),opportunityController.createOpportunity);
+router.get("/get-all",opportunityController.getAllOpportunities);
+router.get("/view/:id",validate(objectIdvalidateSchema),opportunityController.getOpportunityById)
+router.put("/:id", validate(objectIdvalidateSchema), validate(updateOpportunitySchema)
+, opportunityController.updateOpportunity);
+router.delete("/:id",validate(objectIdvalidateSchema),opportunityController.deleteOpportunity);
 export default router;
