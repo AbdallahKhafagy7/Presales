@@ -1,16 +1,14 @@
-const express = require("express");
-const router = express.Router();
-const uploadFileMiddleware = require("../middleware/fileUpload");
-const {
+import express from "express";
+import uploader from "../utils/uploader.js";
+import {
   uploadFile,
   getFiles,
   deleteFile,
-} = require("../controllers/fileController");
+} from "../module/requirment-file/requirment-file.controller.js";
 
-router.post("/:opportunityId", uploadFileMiddleware, uploadFile);
-
+const router = express.Router();
+router.post("/:opportunityId", uploader.single("file-upload"), uploadFile);
 router.get("/:opportunityId", getFiles);
-
 router.delete("/:fileId", deleteFile);
 
 export default router;
