@@ -1,7 +1,5 @@
-const express = require("express");
+import express from "express";
 const router = express.Router();
-
-const { createAnalysis, getAnalysis } = require("../controllers/aiAnalysis");
 
 router.post("/:opportunityId/analysis", createAnalysis);
 

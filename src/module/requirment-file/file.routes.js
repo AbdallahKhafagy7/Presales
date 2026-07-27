@@ -1,11 +1,5 @@
-const express = require("express");
+import express from "express";
 const router = express.Router();
-const uploadFileMiddleware = require("../middleware/fileUpload");
-const {
-  uploadFile,
-  getFiles,
-  deleteFile,
-} = require("../controllers/fileController");
 
 router.post("/:opportunityId", uploadFileMiddleware, uploadFile);
 

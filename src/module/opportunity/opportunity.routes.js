@@ -1,13 +1,5 @@
-const express = require("express");
+import express from "express";
 const router = express.Router();
-
-const {
-  createOpportunity,
-  getOpportunities,
-  getOpportunityById,
-  updateOpportunity,
-  deleteOpportunity,
-} = require("../controllers/opportunityController");
 
 router.post("/", createOpportunity);
 

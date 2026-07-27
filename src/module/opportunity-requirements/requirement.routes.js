@@ -1,10 +1,5 @@
-const express = require("express");
+import express from "express";
 const router = express.Router();
-const {
-  addRequirement,
-  getRequirement,
-  deleteRequirement,
-} = require("../controllers/requirementsController");
 
 router.post("/:opportunityId", addRequirement);
 
