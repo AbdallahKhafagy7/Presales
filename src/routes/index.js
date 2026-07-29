@@ -6,6 +6,7 @@ import requirementRoutes from "../module/opportunity-requirements/requirement.ro
 import fileRoutes from "../module/requirment-file/file.routes.js";
 import aiAnalysisRoutes from "../module/opportunity-analysis/aiAnalysis.routes.js";
 import clarificationRoutes from "../module/clarification/clarification.routes.js";
+import technologyRoutes from "../module/clarification/clarification.routes.js";
 
 const router = express.Router();
 
@@ -14,6 +15,7 @@ router.use("/requirements", requirementRoutes);
 router.use("/files", fileRoutes);
 router.use("/opportunities", aiAnalysisRoutes);
 router.use("/opportunities", clarificationRoutes);
+router.use("/technology", technologyRoutes);
 
 router.get("/health", (req, res) => {
   const databaseConnected = mongoose.connection.readyState === 1;

@@ -21,47 +21,47 @@ import {
   deleteAssumptionValidation,
 } from "./clarification.validation.js";
 
-import validation from "../../middleware/validation.middleware.js";
+import validate from "../../utils/middleware/zod.validation.js";
 
 router.get(
-  "/:opportunityId",
-  validation(getClarificationValidation),
+  "/:opportunityId/clarifications",
+  validate(getClarificationValidation),
   getClarification,
 );
 
 router.post(
   "/:opportunityId/questions",
-  validation(createQuestionValidation),
+  validate(createQuestionValidation),
   addQuestion,
 );
 
 router.patch(
   "/:opportunityId/questions/:questionId",
-  validation(updateQuestionValidation),
+  validate(updateQuestionValidation),
   updateQuestion,
 );
 
 router.delete(
   "/:opportunityId/questions/:questionId",
-  validation(deleteQuestionValidation),
+  validate(deleteQuestionValidation),
   deleteQuestion,
 );
 
 router.post(
   "/:opportunityId/assumptions",
-  validation(createAssumptionValidation),
+  validate(createAssumptionValidation),
   addAssumption,
 );
 
 router.patch(
   "/:opportunityId/assumptions/:assumptionId",
-  validation(updateAssumptionValidation),
+  validate(updateAssumptionValidation),
   updateAssumption,
 );
 
 router.delete(
   "/:opportunityId/assumptions/:assumptionId",
-  validation(deleteAssumptionValidation),
+  validate(deleteAssumptionValidation),
   deleteAssumption,
 );
 
