@@ -3,7 +3,7 @@ import {
   addTechnologyService,
   updateTechnologyService,
   deleteTechnologyService,
-} from "./technology-catalog.service";
+} from "./technology-catalog.service.js";
 
 export const getTechnologies = async (req, res, next) => {
   try {

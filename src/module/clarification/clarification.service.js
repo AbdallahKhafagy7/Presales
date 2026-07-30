@@ -1,5 +1,5 @@
 import Clarification from "../../model/clarification/clarification.model.js";
-import OpportunityAnalysis from "../../model/opportunity-analysis/opportunity-analysis.model.js";
+//import OpportunityAnalysis from "../../model/opportunity-analysis/opportunity-analysis.model.js";
 
 export const getClarificationService = async (opportunityId) => {
   const clarification = await Clarification.findOne({ opportunityId });
@@ -8,7 +8,7 @@ export const getClarificationService = async (opportunityId) => {
     return null;
   }
 
-  if (analysis) {
+  /*if (analysis) {
     const analysis = await OpportunityAnalysis.findOne({
       opportunityId,
     }).sort({ analyzedAt: -1 });
@@ -30,7 +30,7 @@ export const getClarificationService = async (opportunityId) => {
     );
 
     return updatedClarification;
-  }
+  }*/
 
   return clarification;
 };

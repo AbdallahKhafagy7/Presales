@@ -1,5 +1,5 @@
 import express from "express";
-const router = Router();
+const router = express.Router();
 
 import {
   getClarification,
@@ -21,7 +21,7 @@ import {
   deleteAssumptionValidation,
 } from "./clarification.validation.js";
 
-import validate from "../../utils/middleware/zod.validation.js";
+import { validate } from "../../utils/middleware/zod.validation.js";
 
 router.get(
   "/:opportunityId/clarifications",

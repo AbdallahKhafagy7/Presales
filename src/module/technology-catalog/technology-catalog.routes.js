@@ -1,20 +1,20 @@
 import express from "express";
-const router = Router();
+const router = express.Router();
 
 import {
   getTechnologies,
   addTechnology,
   updateTechnology,
   deleteTechnology,
-} from "./technology-catalog.controller";
+} from "./technology-catalog.controller.js";
 
 import {
   addTechnologyValidation,
   updateTechnologyValidation,
   deleteTechnologyValidation,
-} from "./technology-catalog.validation";
+} from "./technology-catalog.validation.js";
 
-import validate from "../../utils/middleware/zod.validation.js";
+import { validate } from "../../utils/middleware/zod.validation.js";
 
 router.get("/", getTechnologies);
 router.post("/", validate(addTechnologyValidation), addTechnology);

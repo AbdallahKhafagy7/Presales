@@ -1,4 +1,4 @@
-import { technologyCatalogSchema } from "./technology-catalog.schema";
+import { technologyCatalogSchema } from "./technology-catalog.schema.js";
 import { model } from "mongoose";
 
 const TechnologyCatalog = model("TechnologyCatalog", technologyCatalogSchema);

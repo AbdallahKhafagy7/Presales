@@ -1,7 +1,7 @@
 import Opportunity from "../../model/opportunity/opportunity.model.js";
 import Clarification from "../../model/clarification/clarification.model.js";
-import OpportunityRequirement from "../../model/opportunity-requirement/opportunityRequirement.model.js";
-import RequirementFile from "../../model/requirement-file/requirementFile.model.js";
+import OpportunityRequirement from "../../model/opportunity-requirements/opportunity-requirements.js";
+import RequirementFile from "../../model/requirment-file/requirment-file.js";
 
 import { dateConverter } from "../../utils/date/date-converter.js";
 import { NotFoundError } from "../../utils/error/errorClass.js";
