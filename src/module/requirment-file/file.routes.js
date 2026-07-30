@@ -1,12 +1,14 @@
 import express from "express";
-import uploader from "../utils/uploader.js";
+import uploader from "../../utils/uploader.js";
 import {
   uploadFile,
   getFiles,
   deleteFile,
-} from "../module/requirment-file/requirment-file.controller.js";
-
+} from "./requirment-file.controller.js";
 const router = express.Router();
+
+router.post("/:opportunityId", uploadFile);
+
 router.post("/:opportunityId", uploader.single("file-upload"), uploadFile);
 router.get("/:opportunityId", getFiles);
 router.delete("/:fileId", deleteFile);

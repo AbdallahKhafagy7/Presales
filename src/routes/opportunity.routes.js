@@ -1,7 +1,7 @@
 
 import { Router } from "express";
 import * as opportunityController from "../module/opportunity/opportunity.controller.js";
-import * as requirementAnalysisController from "../module/requriement-analysis/requriementAnalysis.controller.js"
+
 import { validate } from "../utils/middleware/zod.validation.js";
 import { createOpportunitySchema, updateOpportunitySchema } from "../module/opportunity/opportunity.validation.js";
 import { objectIdvalidateSchema } from "../module/comman/validation.js";
@@ -16,7 +16,5 @@ router.delete("/:id",validate(objectIdvalidateSchema),opportunityController.dele
 
 /// routers for requirement analysis
 
-router.get("/:id/requirement-analysis/context", requirementAnalysisController.analysisContext);
-router.get("/:id/requirement-analysis/opportunity", requirementAnalysisController.getOpportunity);
-router.post("/:id/requirement-analysis/generate",requirementAnalysisController.generateAnalysis);
+
 export default router;

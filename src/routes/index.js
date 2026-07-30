@@ -1,18 +1,28 @@
 import express from "express";
 import mongoose from "mongoose";
 
-import opportunityRoutes from "./opportunity.routes.js";
-import requirementRoutes from "./requirement.routes.js";
-import fileRoutes from "./file.routes.js";
-// import requirementAnalysisRoutes from "./requriement-analysis.routes.js"
-// import aiAnalysisRoutes from "./aiAnalysis.routes.js";
+
+
+import opportunityRoutes from "../module/opportunity/opportunity.routes.js";
+import requirementRoutes from "../module/opportunity-requirements/requirement.routes.js";
+import fileRoutes from "../module/requirment-file/file.routes.js";
+//import aiAnalysisRoutes from "../module/opportunity-analysis/aiAnalysis.routes.js";
+import clarificationRoutes from "../module/clarification/clarification.routes.js";
+import technologyRoutes from "../module/technology-catalog/technology-catalog.routes.js";
+import recommendationRoutes from "./recommendation.routes.js";
+import requirementAnalysisRoutes from "./requriementAnalysis.routes.js"
 
 const router = express.Router();
 
 router.use("/opportunities", opportunityRoutes);
 router.use("/requirements", requirementRoutes);
 router.use("/files", fileRoutes);
-// router.use("/opportunities", aiAnalysisRoutes);
+router.use("/opportunities", requirementAnalysisRoutes)
+//router.use("/opportunities", aiAnalysisRoutes);
+router.use("/opportunities", clarificationRoutes);
+router.use("/technology", technologyRoutes);
+router.use("/recommendations", recommendationRoutes);
+
 
 
 router.get("/health", (req, res) => {

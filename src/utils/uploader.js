@@ -1,7 +1,7 @@
 import multer from "multer";
 import path from "path";
 
-const uploadPath = path.resolve(process.cwd(), "static", "uploads");
+const uploadPath = path.resolve(import.meta.dirname, "../static/uploads");
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {

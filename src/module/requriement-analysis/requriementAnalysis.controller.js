@@ -6,6 +6,7 @@ import { extract_data } from "../../utils/files/read-files-data.js";
 import logger from "../../utils/logger.js";
 import { generateReqAnalysisPrompt } from "../../utils/systemPrompts.js";
 import generateResponse from "../../utils/ai.js";
+import TechnologyStackRecommendation from "../../model/tech-stack-recommendation/tech-stack-recommendation.js"
 // export const getRequirementAnalysis = (req, res) => {
 //     const { id } = req.params;
 
@@ -59,7 +60,29 @@ export const generateAnalysis = async (req, res) => {
 
     const filesContent = await extract_data(opportunityFiles);
 
-    const prompt = generateReqAnalysisPrompt(opportunity, "", filesContent, opportunityRequirement.requirementsText);
+
+    const recommendations = await TechnologyStackRecommendation.find({
+        opportunityId: id,
+    });
+
+    const recommendedTechnologies = recommendations
+        // Extract the techStack array from each recommendation and flatten them into one array
+        .flatMap(recommendation => recommendation.techStack)
+        
+        // Convert each technology object into a readable text format
+        .map(tech => `
+    Technology: ${tech.technologyName}
+    Category: ${tech.category}
+    Reason: ${tech.reason}
+    `).join("\n");  // Combine all technology strings into one string for the AI prompt
+
+
+    const prompt = generateReqAnalysisPrompt(
+        opportunity,
+        recommendedTechnologies,
+        filesContent,
+        opportunityRequirement.requirementsText
+    );
 
     const reqAnalysisResult = await generateResponse(prompt);
     let reqAnalysisResultCleaned;
