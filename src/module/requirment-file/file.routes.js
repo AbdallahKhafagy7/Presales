@@ -5,6 +5,9 @@ import {
   getFiles,
   deleteFile,
 } from "../module/requirment-file/requirment-file.controller.js";
+const router = express.Router();
+
+router.post("/:opportunityId", uploadFileMiddleware, uploadFile);
 
 const router = express.Router();
 router.post("/:opportunityId", uploader.single("file-upload"), uploadFile);
