@@ -12,7 +12,6 @@ export const opporunitySchema = new Schema({
         type: String,
         required: true,
         minLength: 2,
-        maxLength: 30,
         trim: true,
     },
     industry: {

@@ -1,0 +1,4 @@
+docker build -t name:version => container image creation
+
+
+docker run --name name of container -p 4000:4000 image name container creation 

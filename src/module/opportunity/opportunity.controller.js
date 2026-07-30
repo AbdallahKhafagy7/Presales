@@ -49,8 +49,6 @@ export const getOpportunityById = async (req, res) => {
     if (!opportunity) {
         throw new NotFoundError("Opportunity not found");
     }
-
-    console.log(opportunity);
     const data = {
         clientName: opportunity.clientName,
         projectName: opportunity.projectName,
@@ -95,8 +93,6 @@ export const deleteOpportunity = async (req, res, next) => {
     if (!opportunity) {
         throw new NotFoundError("Opportunity not found");
     }
-
-
     await opportunity.deleteOne();
 
     return res.status(200).json({

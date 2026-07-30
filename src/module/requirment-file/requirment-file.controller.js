@@ -32,7 +32,7 @@ const uploadFile = async (req, res, next) => {
     }
 
     const fileSize = file.size;
-    const fileOriginal = file.originalname;
+    const originalName = file.originalname;
     const fileName = file.filename;
     const filePath = file.path;
 
@@ -40,7 +40,7 @@ const uploadFile = async (req, res, next) => {
       opportunityId,
       fileType,
       fileSize,
-      fileOriginal,
+      originalName,
       fileName,
       filePath,
     });
