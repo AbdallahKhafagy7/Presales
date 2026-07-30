@@ -1,10 +1,35 @@
 import Clarification from "../../model/clarification/clarification.model.js";
+import OpportunityAnalysis from "../../model/opportunity-analysis/opportunity-analysis.model.js";
 
 export const getClarificationService = async (opportunityId) => {
   const clarification = await Clarification.findOne({ opportunityId });
 
   if (!clarification) {
     return null;
+  }
+
+  if (analysis) {
+    const analysis = await OpportunityAnalysis.findOne({
+      opportunityId,
+    }).sort({ analyzedAt: -1 });
+
+    const updatedClarification = await Clarification.findOneAndUpdate(
+      { opportunityId },
+      {
+        questions: analysis.questions.map((question) => ({
+          question,
+        })),
+        assumptions: analysis.assumptions.map((assumption) => ({
+          assumption,
+        })),
+      },
+      {
+        new: true,
+        runValidators: true,
+      },
+    );
+
+    return updatedClarification;
   }
 
   return clarification;
