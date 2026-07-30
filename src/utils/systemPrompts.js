@@ -122,7 +122,21 @@ Generate questions that should be asked to the client before development starts.
 
 8. Possible Risks
 Identify project, business, technical, integration, security, or timeline risks.
+=========================
+OUTPUT RULES
+=========================
 
+1. NEVER return an empty string, empty array, or null value.
+2. Every field in the JSON response MUST contain meaningful content.
+3. Every array MUST contain at least one item.
+4. If a section has no explicitly provided information, do NOT invent information. Instead, return a clear statement such as:
+   - "No specific requirements were provided."
+   - "No external integrations were explicitly specified."
+   - "Further clarification is required from the client."
+5. Distinguish between information explicitly provided and assumptions.
+6. Do not treat assumptions as confirmed requirements.
+7. Do not invent technologies, integrations, business rules, or features.
+8. Return ONLY the JSON object.
 =========================
 OUTPUT FORMAT
 =========================

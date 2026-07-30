@@ -7,6 +7,7 @@ import logger from "../../utils/logger.js";
 import { generateReqAnalysisPrompt } from "../../utils/systemPrompts.js";
 import generateResponse from "../../utils/ai.js";
 import TechnologyStackRecommendation from "../../model/tech-stack-recommendation/tech-stack-recommendation.js"
+import reqAnalysis from "../../model/requirement-analysis/requirementAnalysis.model.js";
 // export const getRequirementAnalysis = (req, res) => {
 //     const { id } = req.params;
 
@@ -68,7 +69,7 @@ export const generateAnalysis = async (req, res) => {
     const recommendedTechnologies = recommendations
         // Extract the techStack array from each recommendation and flatten them into one array
         .flatMap(recommendation => recommendation.techStack)
-        
+
         // Convert each technology object into a readable text format
         .map(tech => `
     Technology: ${tech.technologyName}
@@ -99,8 +100,8 @@ export const generateAnalysis = async (req, res) => {
             aiResponse,
         });
     }
-    return res.status(200).json({
-        executiveSummary: reqAnalysisResultCleaned.reqAnalysisResultCleaned,
+    const reqAnalysisData = await reqAnalysis.create({
+        executiveSummary: reqAnalysisResultCleaned.executiveSummary,
         functionalRequirements: reqAnalysisResultCleaned.functionalRequirements,
         nonFunctionalRequirements: reqAnalysisResultCleaned.nonFunctionalRequirements,
         mainModules: reqAnalysisResultCleaned.mainModules,
@@ -110,5 +111,6 @@ export const generateAnalysis = async (req, res) => {
         possibleRisks: reqAnalysisResultCleaned.possibleRisks,
         status: "draft",
     })
+    return res.status(200).json({ data: reqAnalysisData })
 }
 
