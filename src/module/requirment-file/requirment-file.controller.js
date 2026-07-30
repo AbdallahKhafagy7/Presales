@@ -6,6 +6,7 @@ import {
   BadRequestError,
   NotFoundError,
 } from "../../utils/error/errorClass.js";
+import ApiResponse from "../../utils/ApiResponse.js";
 
 const uploadFile = async (req, res, next) => {
   try {
@@ -30,9 +31,8 @@ const uploadFile = async (req, res, next) => {
     if (file.size > 5 * 1024 * 1024) {
       throw new BadRequestError("File size must not exceed 5 MB!");
     }
-
     const fileSize = file.size;
-    const fileOriginal = file.originalname;
+    const originalName = file.originalname;
     const fileName = file.filename;
     const filePath = file.path;
 
@@ -40,12 +40,13 @@ const uploadFile = async (req, res, next) => {
       opportunityId,
       fileType,
       fileSize,
-      fileOriginal,
+      originalName,
       fileName,
       filePath,
     });
 
-    res.status(201).json({ data: f });
+    const response = new ApiResponse(201, f, "File uploadded successfully");
+    return res.status(response.statusCode).json(response);
   } catch (e) {
     next(e);
   }
@@ -62,7 +63,8 @@ const getFiles = async (req, res, next) => {
 
     const files = await RequirementFile.find({ opportunityId });
 
-    res.json({ data: files, meta: { len: files.length } });
+    const response = new ApiResponse(200, files, "");
+    return res.status(response.statusCode).json(response);
   } catch (e) {
     next(e);
   }
@@ -76,7 +78,8 @@ const deleteFile = async (req, res, next) => {
       throw new NotFoundError("File not found!");
     }
 
-    res.json({ message: "File deleted successfully!" });
+    const response = new ApiResponse(200, file, "File deleted successfully");
+    return res.status(response.statusCode).json(response);
   } catch (e) {
     next(e);
   }

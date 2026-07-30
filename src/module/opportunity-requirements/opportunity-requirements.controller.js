@@ -4,6 +4,7 @@ import {
   BadRequestError,
   NotFoundError,
 } from "../../utils/error/errorClass.js";
+import ApiResponse from "../../utils/ApiResponse.js";
 
 const createRequirement = async (req, res, next) => {
   try {
@@ -33,7 +34,13 @@ const createRequirement = async (req, res, next) => {
     // update
     requirement.requirementsText = requirementsText;
     await requirement.save();
-    res.status(201).json({ data: requirement });
+
+    const response = new ApiResponse(
+      201,
+      requirement,
+      "Data Successfully created",
+    );
+    return res.status(response.statusCode).json(response);
   } catch (e) {
     next(e);
   }
@@ -42,6 +49,7 @@ const createRequirement = async (req, res, next) => {
 const getRequirement = async (req, res, next) => {
   try {
     const { opportunityId } = req.params;
+    console.log(opportunityId);
 
     const opportunity = await Opportunity.findById(opportunityId);
     if (!opportunity) {
@@ -55,7 +63,8 @@ const getRequirement = async (req, res, next) => {
       );
     }
 
-    res.json({ data: { requirement } });
+    const response = new ApiResponse(200, requirement, "");
+    return res.status(response.statusCode).json(response);
   } catch (e) {
     next(e);
   }
@@ -81,7 +90,12 @@ const deleteRequirement = async (req, res, next) => {
 
     await requirement.deleteOne();
 
-    res.json({ message: "Data deleted successfully!" });
+    const response = new ApiResponse(
+      200,
+      requirement,
+      "Data deleted successfully",
+    );
+    return res.status(response.statusCode).json(response);
   } catch (e) {
     next(e);
   }
