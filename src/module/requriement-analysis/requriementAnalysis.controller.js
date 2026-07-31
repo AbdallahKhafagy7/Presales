@@ -8,6 +8,8 @@ import { generateReqAnalysisPrompt } from "../../utils/systemPrompts.js";
 import generateResponse from "../../utils/ai.js";
 import TechnologyStackRecommendation from "../../model/tech-stack-recommendation/tech-stack-recommendation.js"
 import reqAnalysis from "../../model/requirement-analysis/requirementAnalysis.model.js";
+import ApiResponse from "../../utils/ApiResponse.js";
+import { dateConverter } from "../../utils/date/date-converter.js";
 // export const getRequirementAnalysis = (req, res) => {
 //     const { id } = req.params;
 
@@ -100,17 +102,56 @@ export const generateAnalysis = async (req, res) => {
             aiResponse,
         });
     }
-    const reqAnalysisData = await reqAnalysis.create({
-        executiveSummary: reqAnalysisResultCleaned.executiveSummary,
-        functionalRequirements: reqAnalysisResultCleaned.functionalRequirements,
-        nonFunctionalRequirements: reqAnalysisResultCleaned.nonFunctionalRequirements,
-        mainModules: reqAnalysisResultCleaned.mainModules,
-        externalIntegrations: reqAnalysisResultCleaned.externalIntegrations,
-        assumptions: reqAnalysisResultCleaned.assumptions,
-        clarificationQuestions: reqAnalysisResultCleaned.clarificationQuestions,
-        possibleRisks: reqAnalysisResultCleaned.possibleRisks,
+    const reqAnalysisData = await reqAnalysis.findOneAndUpdate(
+        {
+            opportunityId: id,
+            status: "draft",
+        },
+        {
+            $set: {
+                executiveSummary: reqAnalysisResultCleaned.executiveSummary,
+                functionalRequirements: reqAnalysisResultCleaned.functionalRequirements,
+                nonFunctionalRequirements: reqAnalysisResultCleaned.nonFunctionalRequirements,
+                mainModules: reqAnalysisResultCleaned.mainModules,
+                externalIntegrations: reqAnalysisResultCleaned.externalIntegrations,
+                assumptions: reqAnalysisResultCleaned.assumptions,
+                clarificationQuestions: reqAnalysisResultCleaned.clarificationQuestions,
+                possibleRisks: reqAnalysisResultCleaned.possibleRisks,
+                updatedAt: Date.now(),
+                status: "draft",
+            },
+        },
+        {
+            new: true,
+            upsert: true,
+        }
+    );
+    return res.status(200).json({
+        data: reqAnalysisData,
+        createdAt: dateConverter(reqAnalysisData.createdAt),
+        updatedAt: dateConverter(reqAnalysisData.updatedAt),
+    })
+}
+
+export const saveAnalysis = async (req, res) => {
+    const { id } = req.params;
+    const opportunity = await Opportunity.findById(id);
+    if (!opportunity) {
+        throw new NotFoundError("Opportunity not found");
+    }
+    let targetDraft = await reqAnalysis.findOne({
+        opportunityId: id,
         status: "draft",
     })
-    return res.status(200).json({ data: reqAnalysisData })
+    await reqAnalysis.findOneAndDelete({
+        opportunityId: id,
+        status: "published",
+    })
+    targetDraft.status = "published";
+    await targetDraft.save();
+    return res.status(200).json({
+        data: targetDraft,
+    })
+
 }
 

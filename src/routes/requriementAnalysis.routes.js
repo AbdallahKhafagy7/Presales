@@ -4,4 +4,5 @@ const router = Router();
 router.get("/:id/requirement-analysis/context", requirementAnalysisController.analysisContext);
 router.get("/:id/requirement-analysis/opportunity", requirementAnalysisController.getOpportunity);
 router.post("/:id/requirement-analysis/generate",requirementAnalysisController.generateAnalysis);
+router.post("/:id/requirement-analysis/save",requirementAnalysisController.saveAnalysis);
 export default router;

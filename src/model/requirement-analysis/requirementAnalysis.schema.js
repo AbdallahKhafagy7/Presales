@@ -1,6 +1,11 @@
-import { Schema } from "mongoose";
+import mongoose, { Schema } from "mongoose";
 
 export const reqAnalysisSchema = new Schema({
+    opportunityId: {
+        type: mongoose.Types.ObjectId,
+        ref: "opportunity",
+        required: true,
+    },
     executiveSummary: {
         type: [String],
         default: [],
@@ -38,4 +43,4 @@ export const reqAnalysisSchema = new Schema({
         enum: ["draft", "published"],
         default: "draft",
     },
-})
+}, { timestamps: true });
