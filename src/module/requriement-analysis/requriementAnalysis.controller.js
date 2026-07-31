@@ -17,15 +17,25 @@ export const analysisContext = async (req, res) => {
     const opportunityFiles = await RequirementFile.find({
         opportunityId: id,
     });
-    const opportunityRequirement = await opportunityRequirements.find({ opportunityId: id })
-
-    res.status(200).json({
-        requirementFiles: opportunityFiles.length,
-        requirementsText: opportunityRequirement
-            ? "Avilable"
-            : "Not Available",
+    const opportunityRequirement = await opportunityRequirements.findOne({ opportunityId: id })
+    const analysisData = await reqAnalysis.findOne({
+        opportunityId: id,
+        status: "published",
     })
 
+    const response = new ApiResponse(200, {
+        requirementsText: opportunityRequirement
+            ? "Available"
+            : "Not Available",
+        requirementFiles: opportunityFiles.length,
+        clarificationQuestions: analysisData.clarificationQuestions.length,
+        answeredQuestions: 0,
+        assumptions: analysisData.assumptions.length,
+        requirementsSource: "Ready",
+        clarificationAnswered: analysisData.clarificationQuestions.length + "/1 answered",
+        analyzerStatus: "Ready to run",
+    })
+    res.status(response.statusCode).json(response.data);
 }
 
 export const getOpportunity = async (req, res) => {
@@ -34,12 +44,12 @@ export const getOpportunity = async (req, res) => {
     if (!opportunity) {
         throw new NotFoundError("Opportunity not found");
     }
-
-    return res.status(200).json({
+    const respone = new ApiResponse(200, {
         projectName: opportunity.projectName,
         client: opportunity.clientName,
         industry: opportunity.industry,
     })
+    return res.status(respone.statusCode).json(respone.data);
 }
 
 export const generateAnalysis = async (req, res) => {
@@ -51,7 +61,7 @@ export const generateAnalysis = async (req, res) => {
     const opportunityFiles = await RequirementFile.find({
         opportunityId: id,
     });
-    const opportunityRequirement = await opportunityRequirements.find({ opportunityId: id })
+    const opportunityRequirement = await opportunityRequirements.findOne({ opportunityId: id })
 
     const filesContent = await extract_data(opportunityFiles);
 
@@ -118,11 +128,12 @@ export const generateAnalysis = async (req, res) => {
             upsert: true,
         }
     );
-    return res.status(200).json({
+    const respone = new ApiResponse(201, {
         data: reqAnalysisData,
         createdAt: dateConverter(reqAnalysisData.createdAt),
         updatedAt: dateConverter(reqAnalysisData.updatedAt),
     })
+    return res.status(respone.statusCode).json(respone.data);
 }
 
 export const saveAnalysis = async (req, res) => {
@@ -135,15 +146,17 @@ export const saveAnalysis = async (req, res) => {
         opportunityId: id,
         status: "draft",
     })
+    if (!targetDraft) {
+        throw new NotFoundError("Draft requirement analysis not found");
+    }
     await reqAnalysis.findOneAndDelete({
         opportunityId: id,
         status: "published",
     })
     targetDraft.status = "published";
     await targetDraft.save();
-    return res.status(200).json({
-        data: targetDraft,
-    })
+    const respone = new ApiResponse(200, targetDraft)
+    return res.status(respone.statusCode).json(respone.data);
 }
 
 export const getAnalysis = async (req, res) => {
@@ -166,10 +179,8 @@ export const getAnalysis = async (req, res) => {
         opportunityId: id,
         status: "draft",
     });
-
-    return res.status(200).json({
+    const response = new ApiResponse(200, {
         data: publishedAnalysis || [],
-        createdAt: dateConverter(publishedAnalysis.createdAt),
-        updatedAt: dateConverter(publishedAnalysis.updatedAt),
     });
+    return res.status(response.statusCode).json(response.data);
 };
