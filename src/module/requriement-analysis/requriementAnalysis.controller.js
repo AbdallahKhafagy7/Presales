@@ -10,15 +10,7 @@ import TechnologyStackRecommendation from "../../model/tech-stack-recommendation
 import reqAnalysis from "../../model/requirement-analysis/requirementAnalysis.model.js";
 import ApiResponse from "../../utils/ApiResponse.js";
 import { dateConverter } from "../../utils/date/date-converter.js";
-// export const getRequirementAnalysis = (req, res) => {
-//     const { id } = req.params;
 
-//     const opportunityFiles = RequirementFile.find({ opportunityId: id });
-
-
-// }
-
-//not completed
 export const analysisContext = async (req, res) => {
     const { id } = req.params;
 
@@ -152,6 +144,32 @@ export const saveAnalysis = async (req, res) => {
     return res.status(200).json({
         data: targetDraft,
     })
-
 }
 
+export const getAnalysis = async (req, res) => {
+    const { id } = req.params;
+
+    const opportunity = await Opportunity.findById(id);
+
+    if (!opportunity) {
+        throw new NotFoundError("Opportunity not found");
+    }
+
+    const publishedAnalysis = await reqAnalysis.findOne({
+        opportunityId: id,
+        status: "published",
+    });
+
+
+    // Delete the draft after confirming that a published analysis exists
+    await reqAnalysis.deleteOne({
+        opportunityId: id,
+        status: "draft",
+    });
+
+    return res.status(200).json({
+        data: publishedAnalysis || [],
+        createdAt: dateConverter(publishedAnalysis.createdAt),
+        updatedAt: dateConverter(publishedAnalysis.updatedAt),
+    });
+};

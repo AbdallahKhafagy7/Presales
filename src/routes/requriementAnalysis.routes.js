@@ -5,4 +5,5 @@ router.get("/:id/requirement-analysis/context", requirementAnalysisController.an
 router.get("/:id/requirement-analysis/opportunity", requirementAnalysisController.getOpportunity);
 router.post("/:id/requirement-analysis/generate",requirementAnalysisController.generateAnalysis);
 router.post("/:id/requirement-analysis/save",requirementAnalysisController.saveAnalysis);
+router.get("/:id/requirement-analysis/analysis",requirementAnalysisController.getAnalysis);
 export default router;
