@@ -1,9 +1,6 @@
 import express from "express";
 import mongoose from "mongoose";
-
-
-
-import opportunityRoutes from "../module/opportunity/opportunity.routes.js";
+import opportunityRoutes from "./opportunity.routes.js";
 import requirementRoutes from "../module/opportunity-requirements/requirement.routes.js";
 import fileRoutes from "../module/requirment-file/file.routes.js";
 //import aiAnalysisRoutes from "../module/opportunity-analysis/aiAnalysis.routes.js";

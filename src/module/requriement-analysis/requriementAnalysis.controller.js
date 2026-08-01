@@ -22,19 +22,24 @@ export const analysisContext = async (req, res) => {
         opportunityId: id,
         status: "published",
     })
-
-    const response = new ApiResponse(200, {
-        requirementsText: opportunityRequirement
-            ? "Available"
-            : "Not Available",
-        requirementFiles: opportunityFiles.length,
-        clarificationQuestions: analysisData.clarificationQuestions.length,
-        answeredQuestions: 0,
-        assumptions: analysisData.assumptions.length,
-        requirementsSource: "Ready",
-        clarificationAnswered: analysisData.clarificationQuestions.length + "/1 answered",
-        analyzerStatus: "Ready to run",
-    })
+    let response = "";
+    if (!analysisData) {
+        response = new ApiResponse(200, [], "No published requirement analysis")
+    }
+    else {
+        response = new ApiResponse(200, {
+            requirementsText: opportunityRequirement
+                ? "Available"
+                : "Not Available",
+            requirementFiles: opportunityFiles.length,
+            clarificationQuestions: analysisData.clarificationQuestions.length,
+            answeredQuestions: 0,
+            assumptions: analysisData.assumptions.length,
+            requirementsSource: "Ready",
+            clarificationAnswered: analysisData.clarificationQuestions.length + "/1 answered",
+            analyzerStatus: "Ready to run",
+        })
+    }
     res.status(response.statusCode).json(response.data);
 }
 
@@ -63,7 +68,9 @@ export const generateAnalysis = async (req, res) => {
     });
     const opportunityRequirement = await opportunityRequirements.findOne({ opportunityId: id })
 
-    const filesContent = await extract_data(opportunityFiles);
+    const filesContent = opportunityFiles.length > 0
+        ? await extract_data(opportunityFiles)
+        : "";
 
 
     const recommendations = await TechnologyStackRecommendation.find({
@@ -86,7 +93,7 @@ export const generateAnalysis = async (req, res) => {
         opportunity,
         recommendedTechnologies,
         filesContent,
-        opportunityRequirement.requirementsText
+        opportunityRequirement?.requirementsText
     );
 
     const reqAnalysisResult = await generateResponse(prompt);
