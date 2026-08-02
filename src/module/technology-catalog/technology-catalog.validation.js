@@ -4,68 +4,63 @@ const objectIdSchema = z
   .string()
   .regex(/^[0-9a-fA-F]{24}$/, "Invalid MongoDB ID");
 
-const technologyParamsSchema = z.object({
-  technologyId: objectIdSchema,
-});
+const technologyCategorySchema = z.enum([
+  "Frontend",
+  "Backend",
+  "Mobile",
+  "Database",
+  "DevOps",
+  "Cloud",
+  "AI",
+  "Testing",
+  "CMS",
+  "E-commerce",
+]);
 
 export const addTechnologyValidation = z.object({
-  body: z.object({
-    technologyName: z.string().trim().min(1, "Technology name cannot be empty"),
-    category: z.enum([
-      "Frontend",
-      "Backend",
-      "Mobile",
-      "Database",
-      "DevOps",
-      "Cloud",
-      "AI",
-      "Testing",
-      "CMS",
-      "E-commerce",
-    ]),
+  technologyName: z.string().trim().min(1, "Technology name cannot be empty"),
+
+  category: technologyCategorySchema,
+
+  preferredUsecase: z
+    .string()
+    .trim()
+    .min(1, "Preferred usecase cannot be empty"),
+
+  notes: z.string().trim().optional(),
+});
+
+export const updateTechnologyValidation = z
+  .object({
+    technologyId: objectIdSchema,
+
+    technologyName: z
+      .string()
+      .trim()
+      .min(1, "Technology name cannot be empty")
+      .optional(),
+
+    category: technologyCategorySchema.optional(),
+
     preferredUsecase: z
       .string()
       .trim()
-      .min(1, "Preferred usecase cannot be empty"),
-    notes: z.string().trim().optional(),
-  }),
-});
+      .min(1, "Preferred usecase cannot be empty")
+      .optional(),
 
-export const updateTechnologyValidation = z.object({
-  params: technologyParamsSchema,
-  body: z
-    .object({
-      technologyName: z
-        .string()
-        .trim()
-        .min(1, "Technology name cannot be empty")
-        .optional(),
-      category: z
-        .enum([
-          "Frontend",
-          "Backend",
-          "Mobile",
-          "Database",
-          "DevOps",
-          "Cloud",
-          "AI",
-          "Testing",
-          "CMS",
-          "E-commerce",
-        ])
-        .optional(),
-      preferredUsecase: z
-        .string()
-        .trim()
-        .min(1, "Preferred usecase cannot be empty")
-        .optional(),
-      notes: z.string().trim().optional(),
-    })
-    .refine((body) => Object.keys(body).length > 0, {
+    notes: z.string().trim().optional(),
+  })
+  .refine(
+    (data) =>
+      data.technologyName !== undefined ||
+      data.category !== undefined ||
+      data.preferredUsecase !== undefined ||
+      data.notes !== undefined,
+    {
       message: "At least one field must be provided",
-    }),
-});
+    },
+  );
 
 export const deleteTechnologyValidation = z.object({
-  params: technologyParamsSchema,
+  technologyId: objectIdSchema,
 });

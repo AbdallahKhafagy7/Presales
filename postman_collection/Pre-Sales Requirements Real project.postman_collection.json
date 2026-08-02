@@ -1,9 +1,10 @@
 {
   "info": {
-    "_postman_id": "3dad68bb-2b1a-497d-8a6a-1d9c81577319",
+    "_postman_id": "1ef34e43-3179-4240-a4c6-97f0cb5a4983",
     "name": "Pre-Sales Requirements Real project",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-    "_exporter_id": "46188951"
+    "_exporter_id": "56556435",
+    "_collection_link": "https://go.postman.co/collection/56556435-1ef34e43-3179-4240-a4c6-97f0cb5a4983?source=collection_link"
   },
   "item": [
     {
@@ -626,15 +627,6 @@
           "request": {
             "method": "GET",
             "header": [],
-            "body": {
-              "mode": "raw",
-              "raw": "",
-              "options": {
-                "raw": {
-                  "language": "text"
-                }
-              }
-            },
             "url": {
               "raw": "{{base_url}}/api/opportunities/get-all",
               "host": [
@@ -653,15 +645,6 @@
               "originalRequest": {
                 "method": "GET",
                 "header": [],
-                "body": {
-                  "mode": "raw",
-                  "raw": "",
-                  "options": {
-                    "raw": {
-                      "language": "text"
-                    }
-                  }
-                },
                 "url": {
                   "raw": "{{base_url}}/api/opportunities/get-all",
                   "host": [
@@ -721,15 +704,6 @@
           "request": {
             "method": "GET",
             "header": [],
-            "body": {
-              "mode": "raw",
-              "raw": "",
-              "options": {
-                "raw": {
-                  "language": "text"
-                }
-              }
-            },
             "url": {
               "raw": "{{base_url}}/api/opportunities/view/6a6a3d6add113175b5da1111",
               "host": [
@@ -749,15 +723,6 @@
               "originalRequest": {
                 "method": "GET",
                 "header": [],
-                "body": {
-                  "mode": "raw",
-                  "raw": "",
-                  "options": {
-                    "raw": {
-                      "language": "text"
-                    }
-                  }
-                },
                 "url": {
                   "raw": "{{base_url}}/api/opportunities/view/6a6a3d6add113175b5da1111",
                   "host": [
@@ -986,6 +951,947 @@
           ]
         }
       ]
+    },
+    {
+      "name": "Clarification",
+      "item": [
+        {
+          "name": "Get Clarification",
+          "request": {
+            "method": "GET",
+            "header": []
+          },
+          "response": [
+            {
+              "name": "Get Clarification Response",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}/api/opportunities/6a6f115bdebdd06a455320ff/clarifications",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "opportunities",
+                    "6a6f115bdebdd06a455320ff",
+                    "clarifications"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "X-Powered-By",
+                  "value": "Express"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "258"
+                },
+                {
+                  "key": "ETag",
+                  "value": "W/\"102-spQ5ANCqf82e5DS6bAfy2abxEOc\""
+                },
+                {
+                  "key": "Date",
+                  "value": "Sun, 02 Aug 2026 09:56:25 GMT"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=5"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"message\": \"Clarification found successfully\",\n    \"clarification\": {\n        \"_id\": \"6a6f115bdebdd06a45532100\",\n        \"opportunityId\": \"6a6f115bdebdd06a455320ff\",\n        \"questions\": [],\n        \"assumptions\": [],\n        \"createdAt\": \"2026-08-02T09:43:55.569Z\",\n        \"updatedAt\": \"2026-08-02T09:43:55.569Z\",\n        \"__v\": 0\n    }\n}"
+            }
+          ]
+        },
+        {
+          "name": "Add Question",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"question\":\"What is the main purpose of the project?\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/opportunities/6a6f115bdebdd06a455320ff/questions",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "opportunities",
+                "6a6f115bdebdd06a455320ff",
+                "questions"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "Add Question Response",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"question\":\"What is the main purpose of the project?\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}/api/opportunities/6a6f115bdebdd06a455320ff/questions",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "opportunities",
+                    "6a6f115bdebdd06a455320ff",
+                    "questions"
+                  ]
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "X-Powered-By",
+                  "value": "Express"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "455"
+                },
+                {
+                  "key": "ETag",
+                  "value": "W/\"1c7-ntTKsbnP04l0oeGxU38RIpaKax8\""
+                },
+                {
+                  "key": "Date",
+                  "value": "Sun, 02 Aug 2026 10:00:20 GMT"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=5"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"message\": \"Question created successfully\",\n    \"clarification\": {\n        \"_id\": \"6a6f115bdebdd06a45532100\",\n        \"opportunityId\": \"6a6f115bdebdd06a455320ff\",\n        \"questions\": [\n            {\n                \"question\": \"What is the main purpose of the project?\",\n                \"answer\": \"\",\n                \"status\": \"unanswered\",\n                \"_id\": \"6a6f1534f098977b7eb845ae\",\n                \"createdAt\": \"2026-08-02T10:00:20.403Z\",\n                \"updatedAt\": \"2026-08-02T10:00:20.403Z\"\n            }\n        ],\n        \"assumptions\": [],\n        \"createdAt\": \"2026-08-02T09:43:55.569Z\",\n        \"updatedAt\": \"2026-08-02T10:00:20.403Z\",\n        \"__v\": 1\n    }\n}"
+            }
+          ]
+        },
+        {
+          "name": "Update Question",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"question\":\"What is the project about?\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/opportunities/6a6f115bdebdd06a455320ff/questions/6a6f1534f098977b7eb845ae",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "opportunities",
+                "6a6f115bdebdd06a455320ff",
+                "questions",
+                "6a6f1534f098977b7eb845ae"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "Update Question Response",
+              "originalRequest": {
+                "method": "PATCH",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"question\":\"What is the project about?\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}/api/opportunities/6a6f115bdebdd06a455320ff/questions/6a6f1534f098977b7eb845ae",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "opportunities",
+                    "6a6f115bdebdd06a455320ff",
+                    "questions",
+                    "6a6f1534f098977b7eb845ae"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "X-Powered-By",
+                  "value": "Express"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "241"
+                },
+                {
+                  "key": "ETag",
+                  "value": "W/\"f1-0Jm+J7p8Zt8Rz6K5hVVuE6wMYJk\""
+                },
+                {
+                  "key": "Date",
+                  "value": "Sun, 02 Aug 2026 10:02:19 GMT"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=5"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"message\": \"Question updated successfully\",\n    \"question\": {\n        \"question\": \"What is the project about?\",\n        \"answer\": \"\",\n        \"status\": \"unanswered\",\n        \"_id\": \"6a6f1534f098977b7eb845ae\",\n        \"createdAt\": \"2026-08-02T10:00:20.403Z\",\n        \"updatedAt\": \"2026-08-02T10:02:19.548Z\"\n    }\n}"
+            }
+          ]
+        },
+        {
+          "name": "Delete Question",
+          "request": {
+            "method": "GET",
+            "header": []
+          },
+          "response": [
+            {
+              "name": "Delete Question Response",
+              "originalRequest": {
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}/api/opportunities/6a6f115bdebdd06a455320ff/questions/6a6f15e4f098977b7eb845b1",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "opportunities",
+                    "6a6f115bdebdd06a455320ff",
+                    "questions",
+                    "6a6f15e4f098977b7eb845b1"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "X-Powered-By",
+                  "value": "Express"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "246"
+                },
+                {
+                  "key": "ETag",
+                  "value": "W/\"f6-tsdgru8G2+UpjY6BORJHLd2ORxc\""
+                },
+                {
+                  "key": "Date",
+                  "value": "Sun, 02 Aug 2026 10:03:48 GMT"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=5"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"message\": \"Question deleted successfully\",\n    \"deletedQuestion\": {\n        \"question\": \"How much is your budget?\",\n        \"answer\": \"\",\n        \"status\": \"unanswered\",\n        \"_id\": \"6a6f15e4f098977b7eb845b1\",\n        \"createdAt\": \"2026-08-02T10:03:16.146Z\",\n        \"updatedAt\": \"2026-08-02T10:03:16.146Z\"\n    }\n}"
+            }
+          ]
+        },
+        {
+          "name": "Add Assumption",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"assumption\":\"This project should be completed in 4 weeks\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/opportunities/6a6f115bdebdd06a455320ff/assumptions",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "opportunities",
+                "6a6f115bdebdd06a455320ff",
+                "assumptions"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "Add Assumption Response",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"assumption\":\"This project should be completed in 4 weeks\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}/api/opportunities/6a6f115bdebdd06a455320ff/assumptions",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "opportunities",
+                    "6a6f115bdebdd06a455320ff",
+                    "assumptions"
+                  ]
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "X-Powered-By",
+                  "value": "Express"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "614"
+                },
+                {
+                  "key": "ETag",
+                  "value": "W/\"266-4y+TCtwAfAyINK2OAC1sv9E4GSM\""
+                },
+                {
+                  "key": "Date",
+                  "value": "Sun, 02 Aug 2026 10:06:16 GMT"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=5"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"message\": \"Assumption created successfully\",\n    \"clarification\": {\n        \"_id\": \"6a6f115bdebdd06a45532100\",\n        \"opportunityId\": \"6a6f115bdebdd06a455320ff\",\n        \"questions\": [\n            {\n                \"question\": \"What is the project about?\",\n                \"answer\": \"\",\n                \"status\": \"unanswered\",\n                \"_id\": \"6a6f1534f098977b7eb845ae\",\n                \"createdAt\": \"2026-08-02T10:00:20.403Z\",\n                \"updatedAt\": \"2026-08-02T10:02:19.548Z\"\n            }\n        ],\n        \"assumptions\": [\n            {\n                \"assumption\": \"This project should be completed in 4 weeks\",\n                \"_id\": \"6a6f1698f098977b7eb845b5\",\n                \"createdAt\": \"2026-08-02T10:06:16.671Z\",\n                \"updatedAt\": \"2026-08-02T10:06:16.671Z\"\n            }\n        ],\n        \"createdAt\": \"2026-08-02T09:43:55.569Z\",\n        \"updatedAt\": \"2026-08-02T10:06:16.671Z\",\n        \"__v\": 4\n    }\n}"
+            }
+          ]
+        },
+        {
+          "name": "Update Assumption",
+          "request": {
+            "method": "GET",
+            "header": []
+          },
+          "response": [
+            {
+              "name": "Update Assumption Response",
+              "originalRequest": {
+                "method": "PATCH",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"assumption\":\"This project should be completed in 3 weeks\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}/api/opportunities/6a6f115bdebdd06a455320ff/assumptions/6a6f1698f098977b7eb845b5",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "opportunities",
+                    "6a6f115bdebdd06a455320ff",
+                    "assumptions",
+                    "6a6f1698f098977b7eb845b5"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "X-Powered-By",
+                  "value": "Express"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "237"
+                },
+                {
+                  "key": "ETag",
+                  "value": "W/\"ed-1ZqvWjLajaKW6VE9F/Um1fTp5hI\""
+                },
+                {
+                  "key": "Date",
+                  "value": "Sun, 02 Aug 2026 10:09:06 GMT"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=5"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"message\": \"Assumption successfully updated\",\n    \"updatedAssumption\": {\n        \"assumption\": \"This project should be completed in 3 weeks\",\n        \"_id\": \"6a6f1698f098977b7eb845b5\",\n        \"createdAt\": \"2026-08-02T10:06:16.671Z\",\n        \"updatedAt\": \"2026-08-02T10:09:06.662Z\"\n    }\n}"
+            }
+          ]
+        },
+        {
+          "name": "Delete Assumption",
+          "request": {
+            "method": "GET",
+            "header": []
+          },
+          "response": [
+            {
+              "name": "Delete Assumption Response",
+              "originalRequest": {
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}/api/opportunities/6a6f115bdebdd06a455320ff/assumptions/6a6f1698f098977b7eb845b5",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "opportunities",
+                    "6a6f115bdebdd06a455320ff",
+                    "assumptions",
+                    "6a6f1698f098977b7eb845b5"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "X-Powered-By",
+                  "value": "Express"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "237"
+                },
+                {
+                  "key": "ETag",
+                  "value": "W/\"ed-c6GDHkA8aX3lSfA85rMXZeRfFKY\""
+                },
+                {
+                  "key": "Date",
+                  "value": "Sun, 02 Aug 2026 10:09:46 GMT"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=5"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"message\": \"Assumption successfully deleted\",\n    \"deletedAssumption\": {\n        \"assumption\": \"This project should be completed in 3 weeks\",\n        \"_id\": \"6a6f1698f098977b7eb845b5\",\n        \"createdAt\": \"2026-08-02T10:06:16.671Z\",\n        \"updatedAt\": \"2026-08-02T10:09:06.662Z\"\n    }\n}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Technology-Catalog",
+      "item": [
+        {
+          "name": "Get Technologies",
+          "request": {
+            "method": "GET",
+            "header": []
+          },
+          "response": [
+            {
+              "name": "Get Technologies Response",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"technologyName\":\"React\",\r\n    \"category\":\"Frontend\",\r\n    \"preferredUsecase\":\"Interactive web applications, dashboards, single-page apps (SPAs), and customer portals.\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}/api/technology",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "technology"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "X-Powered-By",
+                  "value": "Express"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "63"
+                },
+                {
+                  "key": "ETag",
+                  "value": "W/\"3f-IGLQQ1kmch9p74tPzY7P9RdmUsQ\""
+                },
+                {
+                  "key": "Date",
+                  "value": "Sun, 02 Aug 2026 10:12:02 GMT"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=5"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"message\": \"Technologies found successfully\",\n    \"technologies\": []\n}"
+            }
+          ]
+        },
+        {
+          "name": "Add Technology",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"technologyName\":\"React\",\r\n    \"category\":\"Frontend\",\r\n    \"preferredUsecase\":\"Interactive web applications, dashboards, single-page apps (SPAs), and customer portals.\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/technology",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "technology"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "Add Technology Response",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"technologyName\":\"React\",\r\n    \"category\":\"Frontend\",\r\n    \"preferredUsecase\":\"Interactive web applications, dashboards, single-page apps (SPAs), and customer portals.\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}/api/technology",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "technology"
+                  ]
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "X-Powered-By",
+                  "value": "Express"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "256"
+                },
+                {
+                  "key": "ETag",
+                  "value": "W/\"100-cNE6lB1x4Ae9wVMtODt5BajwHps\""
+                },
+                {
+                  "key": "Date",
+                  "value": "Sun, 02 Aug 2026 10:16:09 GMT"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=5"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"message\": \"Technology added successfully\",\n    \"technology\": {\n        \"technologyName\": \"React\",\n        \"category\": \"Frontend\",\n        \"preferredUsecase\": \"Interactive web applications, dashboards, single-page apps (SPAs), and customer portals.\",\n        \"_id\": \"6a6f18e85d8af501c55de2a9\",\n        \"__v\": 0\n    }\n}"
+            }
+          ]
+        },
+        {
+          "name": "Update Technology",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"technologyName\":\"Angular\",\r\n    \"category\":\"Frontend\",\r\n    \"preferredUsecase\":\"Interactive web applications, dashboards, single-page apps (SPAs), and customer portals.\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/technology/6a6f191d5d8af501c55de2aa",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "technology",
+                "6a6f191d5d8af501c55de2aa"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "Update Technology Response",
+              "originalRequest": {
+                "method": "PUT",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"technologyName\":\"Angular\",\r\n    \"category\":\"Frontend\",\r\n    \"preferredUsecase\":\"Interactive web applications, dashboards, single-page apps (SPAs), and customer portals.\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}/api/technology/6a6f191d5d8af501c55de2aa",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "technology",
+                    "6a6f191d5d8af501c55de2aa"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "X-Powered-By",
+                  "value": "Express"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "260"
+                },
+                {
+                  "key": "ETag",
+                  "value": "W/\"104-JEmMrqwtH16pHgGSwzCjDNsibeg\""
+                },
+                {
+                  "key": "Date",
+                  "value": "Sun, 02 Aug 2026 10:18:11 GMT"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=5"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"message\": \"Technology updated successfully\",\n    \"technology\": {\n        \"_id\": \"6a6f191d5d8af501c55de2aa\",\n        \"technologyName\": \"Angular\",\n        \"category\": \"Frontend\",\n        \"preferredUsecase\": \"Interactive web applications, dashboards, single-page apps (SPAs), and customer portals.\",\n        \"__v\": 0\n    }\n}"
+            }
+          ]
+        },
+        {
+          "name": "Delete Technology",
+          "request": {
+            "method": "GET",
+            "header": []
+          },
+          "response": [
+            {
+              "name": "Delete Technology Response",
+              "originalRequest": {
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}/api/technology/6a6f191d5d8af501c55de2aa",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "technology",
+                    "6a6f191d5d8af501c55de2aa"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "X-Powered-By",
+                  "value": "Express"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "260"
+                },
+                {
+                  "key": "ETag",
+                  "value": "W/\"104-8pEvBQawU51Od506wXGjoe+Qf4g\""
+                },
+                {
+                  "key": "Date",
+                  "value": "Sun, 02 Aug 2026 10:18:59 GMT"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=5"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"message\": \"Technology deleted successfully\",\n    \"technology\": {\n        \"_id\": \"6a6f191d5d8af501c55de2aa\",\n        \"technologyName\": \"Angular\",\n        \"category\": \"Frontend\",\n        \"preferredUsecase\": \"Interactive web applications, dashboards, single-page apps (SPAs), and customer portals.\",\n        \"__v\": 0\n    }\n}"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
     }
   ],
   "variable": [
