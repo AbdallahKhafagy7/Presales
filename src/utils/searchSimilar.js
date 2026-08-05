@@ -1,8 +1,8 @@
 import opportunityEmbedding from "../model/opportunity-embedding/opportunity-embedding.model.js";
 import buildAggragationPipeline from "./aggregation-pipeline.js";
 
-export default async function searchSimilar(queryEmbedding, filters = {}) {
-  const aggregationPipeline = buildAggragationPipeline(queryEmbedding, filters);
+export default async function searchSimilar(queryEmbedding, options = {}) {
+  const aggregationPipeline = buildAggragationPipeline(queryEmbedding, options);
 
   const retrievedContext =
     await opportunityEmbedding.aggregate(aggregationPipeline);

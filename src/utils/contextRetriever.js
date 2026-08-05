@@ -4,20 +4,13 @@ import searchSimilar from "./searchSimilar.js";
 
 export default async function retrieveContext(
   question,
-  sourceType,
+  sourceTypes,
   opportunityId,
 ) {
   const queryEmbedding = await embedText(question);
+  const options = { sourceTypes, opportunityId };
 
-  const filters = {};
-  if (sourceType) {
-    filters.sourceType = sourceType;
-  }
-  if (opportunityId) {
-    filters["metadata.opportunityId"] = opportunityId;
-  }
-
-  const retrievedContext = await searchSimilar(queryEmbedding, filters);
+  const retrievedContext = await searchSimilar(queryEmbedding, options);
 
   return retrievedContext;
 }
