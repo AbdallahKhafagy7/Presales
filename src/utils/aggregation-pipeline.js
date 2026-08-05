@@ -9,7 +9,7 @@ export default function buildAggragationPipeline(queryEmbedding, filters = {}) {
     },
   };
 
-  // Add the filtering conditions if any are provided
+  // Add the pre-filtering conditions if any are provided
   if (Object.keys(filters).length > 0) {
     vectorSearchStage.$vectorSearch.filter = filters;
   }
@@ -23,8 +23,6 @@ export default function buildAggragationPipeline(queryEmbedding, filters = {}) {
         sourceType: 1,
         metadata: 1,
         score: { $meta: "vectorSearchScore" },
-        // Excluding embedding array to save bandwidth & boost speed
-        embedding: 0,
       },
     },
   ];
