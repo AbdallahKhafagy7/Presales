@@ -159,6 +159,9 @@ Do not include explanations outside the JSON.
 }
 
 function chatbotPrompt(question, retrievedContext) {
+  const contextText = Array.isArray(retrievedContext)
+    ? retrievedContext.map((item) => item.text).join("\n\n---\n\n")
+    : retrievedContext;
   return `You are a helpful assistant. Answer the user's question using ONLY the information provided in the context below. 
 
 Guiding Rules:
@@ -168,7 +171,7 @@ Guiding Rules:
 - Keep your answer simple, direct, and clear.
 
 Context:
-${retrievedContext}
+${contextText}
 
 Question:
 ${question}`;

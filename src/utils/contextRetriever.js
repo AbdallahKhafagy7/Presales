@@ -10,7 +10,7 @@ export default async function retrieveContext(
   const queryEmbedding = await embedText(question);
 
   const filters = {};
-  if (sourceTypes) {
+  if (sourceType) {
     filters.sourceType = sourceType;
   }
   if (opportunityId) {

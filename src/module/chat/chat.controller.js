@@ -20,11 +20,12 @@ const chatHandler = async (req, res, next) => {
       throw new BadRequestError("Failed to generate response from chatbot");
     }
 
-    const response = new ApiResponse(
-      200,
-      llmResponse,
-      "Response generated successfully",
-    );
+    const r = {
+      answer: llmResponse,
+      sources: {},
+    };
+
+    const response = new ApiResponse(200, r, "Response generated successfully");
     return res.status(response.statusCode).json(response);
   } catch (e) {
     next(e);
