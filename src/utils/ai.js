@@ -66,3 +66,5 @@ export default async function generateResponse(prompt) {
 
   return res.choices[0].message.content;
 }
+
+export { getClient, generateResponse };

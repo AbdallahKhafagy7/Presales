@@ -7,20 +7,20 @@ import fileRoutes from "../module/requirment-file/file.routes.js";
 import clarificationRoutes from "../module/clarification/clarification.routes.js";
 import technologyRoutes from "../module/technology-catalog/technology-catalog.routes.js";
 import recommendationRoutes from "./recommendation.routes.js";
-import requirementAnalysisRoutes from "./requriementAnalysis.routes.js"
+import requirementAnalysisRoutes from "./requriementAnalysis.routes.js";
+import ragRoutes from "./rag.routes.js";
 
 const router = express.Router();
 
 router.use("/opportunities", opportunityRoutes);
 router.use("/requirements", requirementRoutes);
 router.use("/files", fileRoutes);
-router.use("/opportunities", requirementAnalysisRoutes)
-//router.use("/opportunities", aiAnalysisRoutes);
+router.use("/opportunities", requirementAnalysisRoutes);
 router.use("/opportunities", clarificationRoutes);
 router.use("/technology", technologyRoutes);
 router.use("/recommendations", recommendationRoutes);
-
-
+router.use("/rag", ragRoutes);
+//router.use("/opportunities", aiAnalysisRoutes);
 
 router.get("/health", (req, res) => {
   const databaseConnected = mongoose.connection.readyState === 1;

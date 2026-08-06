@@ -1,4 +1,3 @@
-
 const technologyStackRecommendationPrompt = (
   projectRequirement,
   technologyStack,
@@ -43,11 +42,11 @@ ${JSON.stringify(technologyStack)}
 ${projectRequirement}`;
 };
 
-export function generateReqAnalysisPrompt(
+function generateReqAnalysisPrompt(
   opportunity,
   recommendedTechnologies,
   filesContent,
-  requirementsText
+  requirementsText,
 ) {
   return `You are a Senior Business Analyst and Solution Architect.
 Your task is to analyze the provided opportunity requirements and generate a structured requirement analysis.
@@ -157,4 +156,28 @@ Return ONLY valid JSON.
 CRITICAL: Respond with ONLY a single valid JSON object. Do not wrap the JSON in markdown and do not include explanations outside the JSON.
 `;
 }
-export { technologyStackRecommendationPrompt };
+
+function chatbotPrompt(question, retrievedContext) {
+  const contextText = Array.isArray(retrievedContext)
+    ? retrievedContext.map((item) => item.text).join("\n\n---\n\n")
+    : retrievedContext;
+  return `You are a helpful assistant. Answer the user's question using ONLY the information provided in the context below. 
+
+Guiding Rules:
+- Answer strictly using the provided context.
+- Do not assume, invent, or extrapolate any facts not directly mentioned in the context.
+- If the answer to the question cannot be found within the context, simply state: "I'm sorry, but that information is not available in the provided context."
+- Keep your answer simple, direct, and clear.
+
+Context:
+${contextText}
+
+Question:
+${question}`;
+}
+
+export {
+  technologyStackRecommendationPrompt,
+  generateReqAnalysisPrompt,
+  chatbotPrompt,
+};
