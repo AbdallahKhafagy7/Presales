@@ -1,4 +1,4 @@
-import OpportunityRequirement from "../../model/requirment-file/requirment-file.js";
+import OpportunityRequirement from "../../model/opportunity-requirements/opportunity-requirements.js";
 import Opportunity from "../../model/opportunity/opportunity.model.js";
 import {
   BadRequestError,
@@ -28,7 +28,9 @@ const createRequirement = async (req, res, next) => {
         opportunityId,
         requirementsText,
       });
-      res.json({ data: or });
+
+      const response = new ApiResponse(201, or, "Data successfully created");
+      return res.status(response.statusCode).json(response);
     }
 
     // update
@@ -36,9 +38,9 @@ const createRequirement = async (req, res, next) => {
     await requirement.save();
 
     const response = new ApiResponse(
-      201,
+      200,
       requirement,
-      "Data Successfully created",
+      "Data successfully updated",
     );
     return res.status(response.statusCode).json(response);
   } catch (e) {
@@ -49,7 +51,6 @@ const createRequirement = async (req, res, next) => {
 const getRequirement = async (req, res, next) => {
   try {
     const { opportunityId } = req.params;
-    console.log(opportunityId);
 
     const opportunity = await Opportunity.findById(opportunityId);
     if (!opportunity) {

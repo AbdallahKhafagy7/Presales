@@ -1,3 +1,4 @@
+import fs from "fs";
 import path from "path";
 import RequirementFile from "../../model/requirment-file/requirment-file.js";
 import Opportunity from "../../model/opportunity/opportunity.model.js";
@@ -70,12 +71,34 @@ const getFiles = async (req, res, next) => {
   }
 };
 
+const downloadFile = async (req, res, next) => {
+  try {
+    const { fileId } = req.params;
+    const file = await RequirementFile.findById(fileId);
+    if (!file) {
+      throw new NotFoundError("File not found!");
+    }
+
+    return res.download(file.filePath, file.originalName, (err) => {
+      if (err && !res.headersSent) {
+        next(new NotFoundError("File is missing from storage!"));
+      }
+    });
+  } catch (e) {
+    next(e);
+  }
+};
+
 const deleteFile = async (req, res, next) => {
   try {
     const { fileId } = req.params;
     const file = await RequirementFile.findByIdAndDelete(fileId);
     if (!file) {
       throw new NotFoundError("File not found!");
+    }
+
+    if (file.filePath) {
+      fs.unlink(file.filePath, () => {});
     }
 
     const response = new ApiResponse(200, file, "File deleted successfully");
@@ -85,4 +108,4 @@ const deleteFile = async (req, res, next) => {
   }
 };
 
-export { uploadFile, getFiles, deleteFile };
+export { uploadFile, getFiles, downloadFile, deleteFile };

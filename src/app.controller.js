@@ -11,7 +11,7 @@ import pinoHttp from "pino-http";
 
 export async function bootStrap(app, express) {
   app.use(express.json());
-  app.use(cors({ origin: "*" }));
+  app.use(cors({ origin: "*", exposedHeaders: ["Content-Disposition"] }));
   // app.use(pinoHttp({ logger }));
 
   app.use("/api", baseRouter);

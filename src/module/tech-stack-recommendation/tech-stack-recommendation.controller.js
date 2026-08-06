@@ -7,7 +7,7 @@ import {
   NotFoundError,
 } from "../../utils/error/errorClass.js";
 import ApiResponse from "../../utils/ApiResponse.js";
-import generateResponse from "../../utils/ai.js";
+import generateResponse, { extractJsonPayload } from "../../utils/ai.js";
 import { technologyStackRecommendationPrompt } from "../../utils/systemPrompts.js";
 
 const generateRecommendation = async (req, res, next) => {
@@ -25,8 +25,16 @@ const generateRecommendation = async (req, res, next) => {
     }
 
     const projectRequirement = requirement["requirementsText"];
+    if (!projectRequirement?.trim()) {
+      throw new BadRequestError("Opportunity requirement text is empty!");
+    }
 
     const technologyStack = await TechnologyCatalog.find();
+    if (!technologyStack.length) {
+      throw new BadRequestError(
+        "Technology catalog is empty. Add technologies before generating a recommendation.",
+      );
+    }
 
     const prompt = technologyStackRecommendationPrompt(
       projectRequirement,
@@ -34,15 +42,16 @@ const generateRecommendation = async (req, res, next) => {
     );
 
     const AI_response = await generateResponse(prompt);
+    const recommendation = extractJsonPayload(AI_response);
 
-    const recommendation = JSON.parse(
-      AI_response.replace(/^```json\s*/, "")
-        .replace(/^```\s*/, "")
-        .replace(/\s*```$/, "")
-        .trim(),
-    );
-    recommendation["opportunityId"] = opportunityId;
-    recommendation["status"] = "draft";
+    if (!Array.isArray(recommendation?.techStack)) {
+      throw new BadRequestError(
+        "AI response did not include a valid techStack array.",
+      );
+    }
+
+    recommendation.opportunityId = opportunityId;
+    recommendation.status = "draft";
 
     const r = await TechnologyStackRecommendation.create(recommendation);
 

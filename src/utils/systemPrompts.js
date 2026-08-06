@@ -18,15 +18,15 @@ const technologyStackRecommendationPrompt = (
    - Set technologyRef to null.
    - Set technologyName to the external tool's standard name.
    - Provide a compelling reason explaining why an external tool is required.
-5. Return ONLY a single JSON object matching the strictly formatted schema below.
+5. CRITICAL OUTPUT RULE: Respond with ONLY a single valid JSON object. Do not include markdown, code fences, commentary, or any text before or after the JSON.
 ---
 
 ### OUTPUT JSON SCHEMA:
 {
   "techStack": [
     {
-      "technologyRef": "string or null (24-character hex ObjectId from catalog if isExternal is false)",
-      "technologyName": "string or null (Name of the external tool if isExternal is true)",
+      "technologyRef": "string or null (24-character hex ObjectId from catalog when isExternal is false; null when isExternal is true)",
+      "technologyName": "string (exact catalog technologyName when isExternal is false; external tool name when isExternal is true)",
       "category": "string (e.g. Frontend, Backend, Database, Cloud, DevOps, Testing, Security)",
       "reason": "string (Why this technology was chosen for these specific requirements)",
       "isExternal": "boolean"
@@ -37,7 +37,7 @@ const technologyStackRecommendationPrompt = (
 ---
 
 ### COMPANY TECHNOLOGY CATALOG (JSON):
-${technologyStack}
+${JSON.stringify(technologyStack)}
 
 ### PROJECT REQUIREMENTS:
 ${projectRequirement}`;
@@ -74,7 +74,7 @@ Description:
 ${opportunity.description ?? "Not provided"}
 
 Notes:
-${opportunity.notes ?? "None"}
+${opportunity.generalNotes ?? opportunity.notes ?? "None"}
 
 =========================
 REQUIREMENTS TEXT
@@ -144,18 +144,17 @@ OUTPUT FORMAT
 Return ONLY valid JSON.
 
 {
-  "executiveSummary": "",
-  "functionalRequirements": [],
-  "nonFunctionalRequirements": [],
-  "mainModules": [],
-  "externalIntegrations": [],
-  "assumptions": [],
-  "clarificationQuestions": [],
-  "possibleRisks": []
+  "executiveSummary": ["string paragraph"],
+  "functionalRequirements": ["string"],
+  "nonFunctionalRequirements": ["string"],
+  "mainModules": ["string"],
+  "externalIntegrations": ["string"],
+  "assumptions": ["string"],
+  "clarificationQuestions": ["string"],
+  "possibleRisks": ["string"]
 }
 
-Do not wrap the JSON in markdown.
-Do not include explanations outside the JSON.
+CRITICAL: Respond with ONLY a single valid JSON object. Do not wrap the JSON in markdown and do not include explanations outside the JSON.
 `;
 }
 export { technologyStackRecommendationPrompt };

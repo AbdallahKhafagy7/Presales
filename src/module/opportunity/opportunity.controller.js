@@ -3,7 +3,6 @@ import Clarification from "../../model/clarification/clarification.model.js";
 import OpportunityRequirement from "../../model/opportunity-requirements/opportunity-requirements.js";
 import RequirementFile from "../../model/requirment-file/requirment-file.js";
 
-import { dateConverter } from "../../utils/date/date-converter.js";
 import { NotFoundError } from "../../utils/error/errorClass.js";
 
 export const createOpportunity = async (req, res, next) => {
@@ -25,15 +24,7 @@ export const createOpportunity = async (req, res, next) => {
 };
 
 export const getAllOpportunities = async (req, res, next) => {
-  const opportunities = await Opportunity.find();
-
-  const data = opportunities.map((opportunity) => ({
-    projectName: opportunity.projectName,
-    status: opportunity.status,
-    industry: opportunity.industry,
-    contact: opportunity.contactEmail,
-    created: dateConverter(opportunity.createdAt),
-  }));
+  const data = await Opportunity.find().sort({ createdAt: -1 });
 
   return res.status(200).json({
     message: "Success",
@@ -43,23 +34,14 @@ export const getAllOpportunities = async (req, res, next) => {
 
 export const getOpportunityById = async (req, res) => {
   const { id } = req.params;
-  const opportunity = await Opportunity.findById(id);
-  if (!opportunity) {
+  const data = await Opportunity.findById(id);
+  if (!data) {
     throw new NotFoundError("Opportunity not found");
   }
-  const data = {
-    clientName: opportunity.clientName,
-    projectName: opportunity.projectName,
-    industry: opportunity.industry,
-    contactPerson: opportunity.contactPerson,
-    contactEmail: opportunity.contactEmail,
-    createdDate: dateConverter(opportunity.createdAt),
-    lastUpdate: dateConverter(opportunity.updatedAt),
-    generalNotes: opportunity.generalNotes
-  }
+
   return res.status(200).json({
     message: "Success",
-    data
+    data,
   });
 };
 

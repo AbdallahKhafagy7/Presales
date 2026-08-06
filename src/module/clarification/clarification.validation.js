@@ -21,15 +21,15 @@ export const updateQuestionValidation = z
 
     question: z.string().trim().min(1, "Question cannot be empty").optional(),
 
-    answer: z.string().trim().min(1, "Answer cannot be empty").optional(),
+    answer: z.string().trim().optional(),
 
-    isAnswered: z.boolean().optional(),
+    status: z.enum(["answered", "unanswered"]).optional(),
   })
   .refine(
     (data) =>
       data.question !== undefined ||
       data.answer !== undefined ||
-      data.isAnswered !== undefined,
+      data.status !== undefined,
     {
       message: "At least one field must be provided",
     },

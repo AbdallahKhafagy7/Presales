@@ -70,6 +70,12 @@ export const updateQuestionService = async (
 
   Object.assign(question, body);
 
+  // When the caller updates the answer without explicitly setting a status,
+  // infer it from whether the answer is now non-empty.
+  if (body.answer !== undefined && body.status === undefined) {
+    question.status = question.answer.trim().length > 0 ? "answered" : "unanswered";
+  }
+
   await clarification.save();
 
   return question;
