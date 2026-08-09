@@ -157,22 +157,36 @@ CRITICAL: Respond with ONLY a single valid JSON object. Do not wrap the JSON in 
 `;
 }
 
-function chatbotPrompt(question, retrievedContext) {
-  const contextText = Array.isArray(retrievedContext)
-    ? retrievedContext.map((item) => item.text).join("\n\n---\n\n")
-    : retrievedContext;
-  return `You are a helpful assistant. Answer the user's question using ONLY the information provided in the context below. 
+function chatbotPrompt(question, retrievedContext, history = []) {
+  const contextText =
+    Array.isArray(retrievedContext) && retrievedContext.length > 0
+      ? retrievedContext.map((item) => item.text).join("\n\n---\n\n")
+      : "No document context retrieved.";
+
+  const historyText =
+    Array.isArray(history) && history.length > 0
+      ? history
+          .map(
+            (turn) =>
+              `${turn.role === "user" ? "User" : "Assistant"}: ${turn.content}`,
+          )
+          .join("\n")
+      : "No previous conversation history.";
+
+  return `You are the official Presales API AI Assistant. 
 
 Guiding Rules:
-- Answer strictly using the provided context.
-- Do not assume, invent, or extrapolate any facts not directly mentioned in the context.
-- If the answer to the question cannot be found within the context, simply state: "I'm sorry, but that information is not available in the provided context."
-- Keep your answer simple, direct, and clear.
+1. Answer the user's question clearly in plain natural text (DO NOT format your response as JSON).
+2. Use the provided Context and Conversation History to answer questions accurately.
+3. For casual greetings or personal introductions (e.g. "hi", "my name is X"), respond politely and naturally without forcing context details into the conversation.
 
-Context:
+Conversation History:
+${historyText}
+
+Retrieved Context Documents:
 ${contextText}
 
-Question:
+User Question:
 ${question}`;
 }
 

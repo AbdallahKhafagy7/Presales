@@ -20,19 +20,13 @@ export default function buildAggragationPipeline(queryEmbedding, options = {}) {
     });
   }
 
-  // 2. Convert opportunityId into the Task 6 rule condition
-  // (Matches that opportunity OR global tech catalog docs)
+  // 2. Get the opportunityId
   if (
     opportunityId &&
     typeof opportunityId === "string" &&
     opportunityId.trim() !== ""
   ) {
-    filterConditions.push({
-      $or: [
-        { "metadata.opportunityId": opportunityId },
-        { sourceType: "technology_catalog" },
-      ],
-    });
+    filterConditions.push({ "metadata.opportunityId": opportunityId });
   }
 
   // 3. Attach filters to the $vectorSearch stage if any conditions exist
