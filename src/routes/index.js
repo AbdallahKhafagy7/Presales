@@ -9,7 +9,7 @@ import technologyRoutes from "../module/technology-catalog/technology-catalog.ro
 import recommendationRoutes from "./recommendation.routes.js";
 import requirementAnalysisRoutes from "./requriementAnalysis.routes.js";
 import ragRoutes from "./rag.routes.js";
-
+import estimationRoutes from "./opportunityEstimation.js"
 const router = express.Router();
 
 router.use("/opportunities", opportunityRoutes);
@@ -17,6 +17,7 @@ router.use("/requirements", requirementRoutes);
 router.use("/files", fileRoutes);
 router.use("/opportunities", requirementAnalysisRoutes);
 router.use("/opportunities", clarificationRoutes);
+router.use("/opportunities", estimationRoutes)
 router.use("/technology", technologyRoutes);
 router.use("/recommendations", recommendationRoutes);
 router.use("/rag", ragRoutes);

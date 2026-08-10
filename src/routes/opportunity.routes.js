@@ -7,12 +7,16 @@ import { createOpportunitySchema, updateOpportunitySchema } from "../module/oppo
 import { objectIdvalidateSchema } from "../module/comman/validation.js";
 
 const router = Router();
-router.post("/create",validate(createOpportunitySchema),opportunityController.createOpportunity);
-router.get("/get-all",opportunityController.getAllOpportunities);
-router.get("/view/:id",validate(objectIdvalidateSchema),opportunityController.getOpportunityById)
+router.post("/create", validate(createOpportunitySchema), opportunityController.createOpportunity);
+router.get("/get-all", opportunityController.getAllOpportunities);
+router.get("/view/:id", validate(objectIdvalidateSchema), opportunityController.getOpportunityById)
 router.put("/:id", validate(objectIdvalidateSchema), validate(updateOpportunitySchema)
-, opportunityController.updateOpportunity);
-router.delete("/:id",validate(objectIdvalidateSchema),opportunityController.deleteOpportunity);
+    , opportunityController.updateOpportunity);
+
+router.delete
+    ("/:id",
+        validate(objectIdvalidateSchema),
+        opportunityController.deleteOpportunity);
 
 /// routers for requirement analysis
 
