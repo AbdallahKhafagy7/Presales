@@ -5,6 +5,8 @@ import RequirementFile from "../../model/requirment-file/requirment-file.js"
 import opportunityRequirements from "../../model/opportunity-requirements/opportunity-requirements.js";
 import TechnologyStackRecommendation from "../../model/tech-stack-recommendation/tech-stack-recommendation.js"
 import reqAnalysis from "../../model/requirement-analysis/requirementAnalysis.model.js";
+import generateResponse, { extractJsonPayload } from "../../utils/ai.js";
+import { buildEstimationPrompt } from "../../utils/systemPrompts.js";
 export const getOpportunity = async (req, res, next) => {
   try {
     const { id } = req.params;
@@ -62,4 +64,37 @@ export const getContext = async (req, res, next) => {
   } catch (error) {
     next(error);
   }
+};
+
+export const generateEstimation = async (req, res) => {
+  const { id } = req.params;
+  const opportunity = await Opportunity.findById(id);
+
+  if (!opportunity) {
+    throw new NotFoundError("Opportunity not found");
+  }
+
+  const requirementsAnalysis =
+    await reqAnalysis.findOne({
+      opportunityId: id,
+    });
+
+  const technologyStack =
+    await TechnologyStackRecommendation.findOne({
+      opportunityId: id,
+    });
+
+
+  const prompt = buildEstimationPrompt({
+    opportunity,
+    requirementsAnalysis,
+    technologyStack,
+    clarificationQuestions: requirementsAnalysis?.clarificationQuestions,
+    assumptions: requirementsAnalysis?.assumptions,
+  });
+
+  const aiResponse = await generateResponse(prompt);
+
+  const response = extractJsonPayload(aiResponse);
+  return res.status(200).json({ response });
 };

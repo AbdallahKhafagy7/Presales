@@ -11,4 +11,7 @@ router.get("/:id/estimation/context",
     validate(objectIdvalidateSchema),
     estimationController.getContext
 )
+router.post("/:id/estimation/generate",
+    validate(objectIdvalidateSchema),
+    estimationController.generateEstimation)
 export default router;
