@@ -48,7 +48,7 @@ export function extractJsonPayload(content) {
   }
 }
 
-export default async function generateResponse(prompt) {
+export default async function generateResponse(prompt, systemPrompt = "") {
   const client = getClient();
 
   const res = await client.chat.completions.create({
@@ -56,12 +56,10 @@ export default async function generateResponse(prompt) {
     messages: [
       {
         role: "system",
-        content:
-          "You are a JSON API. Reply with a single valid JSON object only. Never include markdown, code fences, or explanatory text.",
+        content: systemPrompt,
       },
       { role: "user", content: prompt },
     ],
-    response_format: { type: "json_object" },
   });
 
   return res.choices[0].message.content;
