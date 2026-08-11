@@ -190,22 +190,32 @@ User Question:
 ${question}`;
 }
 
-export {
-  technologyStackRecommendationPrompt,
-  generateReqAnalysisPrompt,
-  chatbotPrompt,
-};
+function needsRetrievalPrompt(history, question) {
+  return `You are an intent classifier for a presales assistant chatbot that answers questions using retrieved project documents.
 
+Decide whether answering the user's message requires retrieving project documents.
 
-export function buildEstimationPrompt (
+Return RETRIEVE if the message asks about: project requirements, features, system architecture, technical details, or anything that would need document context to answer accurately.
+
+Return NO_RETRIEVE if the message is: a greeting, small talk, thanks, a follow-up that doesn't need new information, or a question unrelated to the project (e.g. general programming help, unrelated trivia).
+
+Conversation History:
+${history}
+
+User Message: "${question}"
+
+Respond with ONLY one word: RETRIEVE or NO_RETRIEVE`;
+}
+
+function buildEstimationPrompt(
   opportunity,
   requirementsAnalysis,
   technologyStack,
   clarificationQuestions,
   assumptions,
   sampleEstimation,
-)
- { return `
+) {
+  return `
 You are an experienced Software Technical Lead / Solution Lead responsible for preparing a detailed software project estimation.
 
 Your task is to analyze the supplied opportunity information and generate a realistic software development estimation.
@@ -518,4 +528,12 @@ Do not omit required fields.
 
 Generate the estimation specifically for the supplied opportunity.
 `;
+}
+
+export {
+  technologyStackRecommendationPrompt,
+  generateReqAnalysisPrompt,
+  chatbotPrompt,
+  needsRetrievalPrompt,
+  buildEstimationPrompt,
 };
