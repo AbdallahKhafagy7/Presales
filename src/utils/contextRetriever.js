@@ -11,6 +11,6 @@ export default async function retrieveContext(
   const options = { sourceTypes, opportunityId };
 
   const retrievedContext = await searchSimilar(queryEmbedding, options);
-
+  console.log(retrievedContext);
   return retrievedContext;
 }

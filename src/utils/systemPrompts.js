@@ -158,9 +158,17 @@ CRITICAL: Respond with ONLY a single valid JSON object. Do not wrap the JSON in 
 }
 
 function chatbotPrompt(question, retrievedContext, history = []) {
+  function formatContextItem(item) {
+    const section = item.metadata?.section ? `[${item.metadata.section}]` : "";
+    const title = item.title ? item.title : "Untitled";
+    return `### ${title} ${section}\n${item.text}`;
+  }
+
+  const isFirstMessage = !Array.isArray(history) || history.length === 0;
+
   const contextText =
     Array.isArray(retrievedContext) && retrievedContext.length > 0
-      ? retrievedContext.map((item) => item.text).join("\n\n---\n\n")
+      ? retrievedContext.map(formatContextItem).join("\n\n---\n\n")
       : "No document context retrieved.";
 
   const historyText =
@@ -173,12 +181,27 @@ function chatbotPrompt(question, retrievedContext, history = []) {
           .join("\n")
       : "No previous conversation history.";
 
-  return `You are the official Presales API AI Assistant. 
+  return `You are the official Presales API AI Assistant, helping presales/account teams quickly understand project context.
 
-Guiding Rules:
-1. Answer the user's question clearly in plain natural text (DO NOT format your response as JSON).
-2. Use the provided Context and Conversation History to answer questions accurately.
-3. For casual greetings or personal introductions (e.g. "hi", "my name is X"), respond politely and naturally without forcing context details into the conversation.
+Response format rules:
+- Use Markdown: short paragraphs, and bullet points or headers when listing more than 2-3 items.
+- Be direct and concise. Lead with the answer in the first sentence — do not open with disclaimers like "the context does not explicitly state..." unless the context is genuinely empty or irrelevant.
+- Never mention internal field/section names as if instructing the user to go look there. Just answer from what's given.
+- Do not pad the answer with repeated caveats more than once, and only if truly relevant.
+- Keep answers proportional to the question — a simple question gets a short answer, not an essay.
+- Never output raw JSON, object dumps, or database-looking text back to the user.
+
+Greeting / introduction rules:
+- ${
+    isFirstMessage
+      ? `This is the first message in the conversation. If it's a greeting or the user introduces themselves (e.g. "hi", "my name is X"), respond warmly, briefly state who you are ("I'm the Presales API Assistant — I can help you look up project details, requirements, and opportunity context"), and invite their question. Keep it to 1-2 sentences, don't force document context in.`
+      : `This is NOT the first message. If the user greets you again or reintroduces themselves mid-conversation, just acknowledge naturally and briefly (no need to re-introduce yourself), and don't force document context in.`
+  }
+
+Answering rules:
+- Base your answer only on the Retrieved Context and Conversation History below.
+- If the context has partial information, synthesize it into a clear, confident answer rather than hedging repeatedly.
+- If the context truly has nothing relevant, say so in one short sentence and stop.
 
 Conversation History:
 ${historyText}
@@ -187,7 +210,9 @@ Retrieved Context Documents:
 ${contextText}
 
 User Question:
-${question}`;
+${question}
+
+Answer:`;
 }
 
 function needsRetrievalPrompt(history, question) {
