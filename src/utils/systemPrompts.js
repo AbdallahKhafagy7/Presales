@@ -238,7 +238,6 @@ function buildEstimationPrompt(
   technologyStack,
   clarificationQuestions,
   assumptions,
-  sampleEstimation,
 ) {
   return `
 You are an experienced Software Technical Lead / Solution Lead responsible for preparing a detailed software project estimation.
@@ -279,31 +278,6 @@ ASSUMPTIONS
 ==================================================
 
 ${JSON.stringify(assumptions, null, 2)}
-
-==================================================
-SAMPLE ESTIMATION
-==================================================
-
-The following estimation is a reference example.
-
-Use it to understand:
-
-- Expected level of detail
-- Expected feature decomposition
-- Expected estimation granularity
-- Expected estimation style
-- Expected table structure
-
-IMPORTANT:
-
-Do NOT copy features from the sample unless they are
-actually required by the current opportunity.
-
-The current opportunity requirements always take priority.
-
-SAMPLE:
-
-${JSON.stringify(sampleEstimation, null, 2)}
 
 ==================================================
 ESTIMATION RULES

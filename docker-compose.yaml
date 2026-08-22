@@ -2,31 +2,41 @@ services:
   app:
     build: .
     container_name: pre-sales-api
-
     environment:
+      PORT: 3000
+      MONGODB_URI: mongodb://mongo:27017/presales
+      REDIS_URL: redis://redis:6379
       CHOKIDAR_USEPOLLING: "true"
       WATCHPACK_POLLING: "true"
-
     ports:
       - "3000:3000"
-
     env_file:
       - .env
-
     depends_on:
       - mongo
-
+      - redis
     volumes:
       - .:/app
       - /app/node_modules
 
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: presales-web
+    environment:
+      VITE_API_BASE_URL: http://localhost:3000/api
+      CHOKIDAR_USEPOLLING: "true"
+    ports:
+      - "3001:5173"
+    depends_on:
+      - app
+
   mongo:
     image: mongo:8
     container_name: mongo-db
-
     ports:
       - "27017:27017"
-
     volumes:
       - mongo_data:/data/db
 

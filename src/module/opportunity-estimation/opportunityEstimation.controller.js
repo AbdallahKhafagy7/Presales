@@ -1,13 +1,12 @@
 import Opportunity from "../../model/opportunity/opportunity.model.js";
 import ApiResponse from "../../utils/ApiResponse.js";
 import { NotFoundError } from "../../utils/error/errorClass.js";
-import RequirementFile from "../../model/requirment-file/requirment-file.js"
+import RequirementFile from "../../model/requirment-file/requirment-file.js";
 import opportunityRequirements from "../../model/opportunity-requirements/opportunity-requirements.js";
-import TechnologyStackRecommendation from "../../model/tech-stack-recommendation/tech-stack-recommendation.js"
+import TechnologyStackRecommendation from "../../model/tech-stack-recommendation/tech-stack-recommendation.js";
 import reqAnalysis from "../../model/requirement-analysis/requirementAnalysis.model.js";
 import generateResponse, { extractJsonPayload } from "../../utils/ai.js";
 import { buildEstimationPrompt } from "../../utils/systemPrompts.js";
-import { readExcelAsJson } from "../../utils/files/read-excel-data.js";
 export const getOpportunity = async (req, res, next) => {
   try {
     const { id } = req.params;
@@ -39,7 +38,7 @@ export const getContext = async (req, res, next) => {
     });
     const requirementAnalysis = await reqAnalysis.findOne({
       opportunityId: opportunity._id,
-    })
+    });
     const techRecommendation = await TechnologyStackRecommendation.findOne({
       opportunityId: opportunity._id,
     });
@@ -47,18 +46,13 @@ export const getContext = async (req, res, next) => {
       requirementsText: opportunityRequirement?.requirementsText?.trim()
         ? "Available"
         : "Missing",
-      RequirementAnalysis:
-        requirementAnalysis
-          ? "Available"
-          : "Missing",
-      technologyRecommendation:
-        techRecommendation?.trim()
-          ? "Available"
-          : "Missing",
+      RequirementAnalysis: requirementAnalysis ? "Available" : "Missing",
+      technologyRecommendation: techRecommendation?.trim()
+        ? "Available"
+        : "Missing",
       answeredClarificationQuestions:
         requirementAnalysis.clarificationQuestions.length ?? 0,
-      Assumptions:
-        requirementAnalysis.assumptions.length ?? 0,
+      Assumptions: requirementAnalysis.assumptions.length ?? 0,
     });
 
     return res.status(response.statusCode).json(response);
@@ -76,32 +70,27 @@ export const generateEstimation = async (req, res, next) => {
       throw new NotFoundError("Opportunity not found");
     }
 
-    const requirementsAnalysis =
-      await reqAnalysis.findOne({
-        opportunityId: id,
-      });
+    const requirementsAnalysis = await reqAnalysis.findOne({
+      opportunityId: id,
+    });
 
-    const technologyStack =
-      await TechnologyStackRecommendation.findOne({
-        opportunityId: id,
-      });
+    const technologyStack = await TechnologyStackRecommendation.findOne({
+      opportunityId: id,
+    });
 
-    const sampleEstimation = await readExcelAsJson("static/estimation-sample/GAFI_PortalRevamp_Estimates_v1.0.xlsx")
     const prompt = buildEstimationPrompt({
       opportunity,
       requirementsAnalysis,
       technologyStack,
       clarificationQuestions: requirementsAnalysis?.clarificationQuestions,
       assumptions: requirementsAnalysis?.assumptions,
-      sampleEstimation
     });
 
     const aiResponse = await generateResponse(prompt);
 
     const response = extractJsonPayload(aiResponse);
     return res.status(200).json({ response });
-  }
-  catch (error) {
+  } catch (error) {
     next(error);
   }
 };

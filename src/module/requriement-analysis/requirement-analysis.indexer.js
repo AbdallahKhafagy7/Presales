@@ -40,7 +40,6 @@ export const indexRequirementAnalyses = async (req, res) => {
         "",
         content,
       ].join("\n");
-      console.log(text);
 
       documents.push({
         title: `${opportunity.projectName} - ${section.name}`,

@@ -70,6 +70,10 @@ web_modules/
 .env.*
 !.env.example
 
+# Runtime uploads
+src/static/uploads/*
+!src/static/uploads/.gitkeep
+
 # parcel-bundler cache (https://parceljs.org/)
 .cache
 .parcel-cache

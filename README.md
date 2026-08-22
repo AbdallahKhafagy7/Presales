@@ -1,270 +1,210 @@
-# presales-ai-backend
+# Presales AI API
 
-**Version:** `1.0.0`
-## Quick Start
+An AI-assisted backend for turning sales opportunities and uploaded project documents into structured requirements, analysis, estimates, and technology recommendations.
+
+The service combines an Express API with MongoDB for opportunity data, Redis for caching and chat state, and an Azure OpenAI-compatible model for generation, embeddings, RAG search, clarification, and estimation workflows.
+
+## What It Provides
+
+- Opportunity lifecycle management
+- Requirement capture and document-backed requirement analysis
+- File uploads for project and requirement documents
+- AI-generated clarification questions
+- Effort and cost estimation workflows
+- Technology catalog and technology-stack recommendations
+- Retrieval-augmented chat over indexed opportunity content
+- Reindexing support for refreshed embeddings
+- Request validation with Zod and centralized error handling
+- Health checks and structured application logging
+
+## Technology
+
+- Node.js 22+
+- Express 5
+- MongoDB with Mongoose
+- Redis
+- Azure OpenAI-compatible API through the OpenAI SDK
+- Zod, Multer, Mammoth, and PDF parsing utilities
+- Docker and Docker Compose
+
+## Frontend
+
+The frontend is included in the `frontend/` directory and is built with React and Vite.
+
+## API Overview
+
+All endpoints are prefixed with `/api`.
+
+| Method   | Complete endpoint                                             | Purpose                                                 |
+| -------- | ------------------------------------------------------------- | ------------------------------------------------------- |
+| `GET`    | `/api/health`                                                 | Reports API and MongoDB connectivity                    |
+| `POST`   | `/api/opportunities/create`                                   | Create an opportunity                                   |
+| `GET`    | `/api/opportunities/get-all`                                  | List all opportunities                                  |
+| `GET`    | `/api/opportunities/view/:id`                                 | Get one opportunity                                     |
+| `PUT`    | `/api/opportunities/:id`                                      | Update an opportunity                                   |
+| `DELETE` | `/api/opportunities/:id`                                      | Delete an opportunity                                   |
+| `POST`   | `/api/requirements/:opportunityId`                            | Create opportunity requirements                         |
+| `GET`    | `/api/requirements/:opportunityId`                            | Get opportunity requirements                            |
+| `DELETE` | `/api/requirements/:opportunityId`                            | Delete opportunity requirements                         |
+| `POST`   | `/api/files/:opportunityId`                                   | Upload a requirement file using the `file-upload` field |
+| `GET`    | `/api/files/:opportunityId`                                   | List files for an opportunity                           |
+| `GET`    | `/api/files/download/:fileId`                                 | Download a requirement file                             |
+| `DELETE` | `/api/files/:fileId`                                          | Delete a requirement file                               |
+| `GET`    | `/api/opportunities/:id/requirement-analysis/context`         | Get requirement-analysis context                        |
+| `GET`    | `/api/opportunities/:id/requirement-analysis/opportunity`     | Get the opportunity for analysis                        |
+| `POST`   | `/api/opportunities/:id/requirement-analysis/generate`        | Generate requirement analysis                           |
+| `POST`   | `/api/opportunities/:id/requirement-analysis/save`            | Save requirement analysis                               |
+| `PUT`    | `/api/opportunities/:id/requirement-analysis/analysis`        | Update requirement analysis                             |
+| `GET`    | `/api/opportunities/:id/requirement-analysis/analysis`        | Get saved requirement analysis                          |
+| `GET`    | `/api/opportunities/:opportunityId/clarifications`            | Get clarification questions and assumptions             |
+| `POST`   | `/api/opportunities/:opportunityId/questions`                 | Add a clarification question                            |
+| `PATCH`  | `/api/opportunities/:opportunityId/questions/:questionId`     | Update a clarification question                         |
+| `DELETE` | `/api/opportunities/:opportunityId/questions/:questionId`     | Delete a clarification question                         |
+| `POST`   | `/api/opportunities/:opportunityId/assumptions`               | Add an assumption                                       |
+| `PATCH`  | `/api/opportunities/:opportunityId/assumptions/:assumptionId` | Update an assumption                                    |
+| `DELETE` | `/api/opportunities/:opportunityId/assumptions/:assumptionId` | Delete an assumption                                    |
+| `GET`    | `/api/opportunities/:id/estimations/opportunity`              | Get estimation opportunity data                         |
+| `GET`    | `/api/opportunities/:id/estimations/context`                  | Get estimation context                                  |
+| `POST`   | `/api/opportunities/:id/estimations/generate`                 | Generate an opportunity estimate                        |
+| `GET`    | `/api/technology/`                                            | List technologies                                       |
+| `POST`   | `/api/technology/`                                            | Add a technology                                        |
+| `PUT`    | `/api/technology/:technologyId`                               | Update a technology                                     |
+| `DELETE` | `/api/technology/:technologyId`                               | Delete a technology                                     |
+| `POST`   | `/api/recommendations/:opportunityId`                         | Generate technology recommendations                     |
+| `GET`    | `/api/recommendations/:opportunityId`                         | Get saved recommendations                               |
+| `PUT`    | `/api/recommendations/:opportunityId`                         | Save recommendations                                    |
+| `DELETE` | `/api/recommendations/:opportunityId`                         | Delete recommendations                                  |
+| `POST`   | `/api/rag/chat`                                               | Ask a question using indexed context                    |
+| `POST`   | `/api/rag/chat/reset`                                         | Reset a chat session                                    |
+| `POST`   | `/api/rag/reindex/technology-catalog`                         | Reindex the technology catalog                          |
+| `POST`   | `/api/rag/reindex/requirement-analysis`                       | Reindex requirement analyses                            |
+| `POST`   | `/api/rag/reindex/opportunities`                              | Reindex opportunities                                   |
+
+### Example
+
+Create an opportunity:
 
 ```bash
-git clone <repository-url>
-cd pre-sales-requirements
+curl -X POST http://localhost:5000/api/opportunities/create \
+	-H "Content-Type: application/json" \
+	-d '{
+		"projectName": "Customer Portal",
+		"clientName": "Acme Corp",
+		"contactPerson": "Jane Doe",
+		"contactEmail": "jane.doe@example.com",
+		"industry": "Software",
+		"generalNotes": "A self-service portal for customer operations"
+	}'
+```
+
+Check service health:
+
+```bash
+curl http://localhost:5000/api/health
+```
+
+Start with `/api/health` when verifying a new environment.
+
+## Getting Started
+
+### Prerequisites
+
+- Node.js 22 or newer
+- MongoDB 8 or a compatible MongoDB deployment
+- Redis 6 or newer
+- An Azure OpenAI-compatible deployment and API key for AI features
+
+### 1. Install dependencies
+
+```bash
 npm install
-cp .env.example .env
-npm run start:dev
-
-
-## Installation Guide
-
-## Prerequisites
-
-Before running the project, ensure that the following software is installed:
-
-- Node.js 
-- npm
-- MongoDB
-- Git
-- Docker 
-
-Verify installation:
-
-```bash
-node -v
-npm -v
-git --version
 ```
 
----
+### 2. Configure environment variables
 
-## 1. Clone the Repository
-
-```bash
-git clone <repository-url>
-cd pre-sales-requirements
-```
-
----
-
-## 2. Install Dependencies
-
-```bash
-npm install
-```
-
----
-
-## 3. Configure Environment Variables
-
-Create a `.env` file in the root directory.
-
-Example:
+Create a `.env` file in the project root:
 
 ```env
-PORT=3000
-MONGODB_URI=mongodb://localhost:27017/pre-sales-requirements
-
-API_KEY=
+PORT=5000
+NODE_ENV=development
+API_PREFIX=/api
+MONGODB_URI=mongodb://localhost:27017/presales
+REDIS_URL=redis://localhost:6379
+OPENAI_API_KEY=your_api_key
+AI_MODEL=your_deployment_name
+LOG_LEVEL=info
 ```
 
-Or copy the example file:
+`OPENAI_API_KEY` and `AI_MODEL` are required for AI-powered endpoints. Keep `.env` out of version control and rotate keys immediately if they are exposed.
 
-```bash
-cp .env.example .env
-```
+### 3. Run the API
 
----
-
-## 4. Run the Application
-
-### Development Mode
+Development mode with automatic restart:
 
 ```bash
 npm run start:dev
 ```
 
-### Production Mode
+Production-style start:
 
 ```bash
-npm run build
 npm start
 ```
 
-The API will be available at:
+The API listens on `http://localhost:5000` by default.
 
-```text
-http://localhost:3000
-```
+## Docker Compose
 
----
-
-## 5. Run Using Docker (Optional)
+The Compose file provisions the frontend, API, MongoDB, and Redis services:
 
 ```bash
 docker compose up --build
 ```
 
-Stop containers:
+The complete application will be available at:
+
+- Frontend: `http://localhost:3001`
+- Backend API: `http://localhost:3000/api`
+- Backend health check: `http://localhost:3000/api/health`
+
+When running inside Compose, use the service names in connection strings:
+
+```env
+PORT=3000
+MONGODB_URI=mongodb://mongo:27017/presales
+REDIS_URL=redis://redis:6379
+VITE_API_BASE_URL=http://localhost:3000/api
+```
+
+The frontend is built from the local `frontend/` directory, so no internet connection is required for the frontend build after the repository has been downloaded.
+
+Stop the services with:
 
 ```bash
 docker compose down
 ```
 
----
+Add `-v` only when you intentionally want to remove the persisted MongoDB and Redis volumes.
 
-# Project Description
+## Project Structure
 
-Pre-Sales Requirements is a RESTful API built to manage pre-sales opportunities and their related requirements.
-
-The system allows users to:
-
-- Create, update, retrieve, and delete opportunities.
-- Add or update requirements text for an opportunity.
-- Upload and manage requirement files.
-- Analyze requirements using AI.
-- Enforce business rules before an opportunity can be marked as ready for analysis.
-- Automatically remove related requirements and files when deleting an opportunity.
-
----
-
-# Technologies Used
-
-## Backend
-- Node.js
-- Express.js
-- TypeScript
-
-## Database
-- MongoDB
-- Mongoose
-
-## Validation
-- Zod
-
-## File Upload
-- Multer
-
-## AI Integration
-- OpenAI SDK / Azure AI Foundry
-
-# Error Handling
-
-The application uses custom exception classes to provide consistent API error responses.
-
-## Available Exceptions
-
-| Error Class | HTTP Status Code | Description |
-|------------|-----------------|-------------|
-| `BadRequestError` | `400` | Invalid request data or business rule violation |
-| `AuthorityError` | `401` | Authentication or authorization failure |
-| `NotFoundError` | `404` | Requested resource does not exist |
-| `ConflictError` | `409` | Resource conflict or duplicate data |
-| `AppError` | Custom | Base error class for all application exceptions |
-
----
-
-## Error Response Format
-
-All errors follow the same response structure:
-
-```json
-{
-  "message": "Validation failed",
-  "errorDetails": [
-    {
-      "field": "title",
-      "message": "Title is required"
-    }
-  ]
-}
+```text
+src/
+├── config/              Environment configuration
+├── DB/                  MongoDB and Redis connections
+├── static/uploads/      Runtime requirement-file uploads
+├── model/               Mongoose schemas and models
+├── module/              Feature controllers, services, routes, and validation
+├── routes/              API route composition
+└── utils/               AI, embeddings, RAG, uploads, errors, logging, and middleware
 ```
 
----
+## Operational Notes
 
-## Example Responses
+- The health endpoint returns HTTP `200` when MongoDB is connected and `503` when it is not.
+- Uploaded files are stored under `src/static/uploads`; configure deployment storage accordingly.
+- AI generation uses an Azure OpenAI-compatible deployment selected through `AI_MODEL`.
 
-### Bad Request
+## License
 
-```json
-{
-  "message": "Opportunity cannot be marked as ready for analysis",
-  "statusCode": 400
-}
-```
-
-### Not Found
-
-```json
-{
-  "message": "Opportunity not found",
-  "statusCode": 404
-}
-```
-
-### Conflict
-
-```json
-{
-  "message": "Opportunity already exists",
-  "statusCode": 409
-}
-```
-
-### Unauthorized
-
-```json
-{
-  "message": "Invalid token",
-  "statusCode": 401
-}
-```
-
-# Project Structure
-
-```bash
-src
-├── config/                    # Application and AI configuration
-│   ├── AI.config.ts
-│   └── dev.env.ts
-│
-├── DB/                        # Database connection configuration
-│   └── connection.ts
-│
-├── model/                     # Mongoose schemas and models
-│   ├── opportunity/
-│   ├── opportunityAnalysis/
-│   ├── opportunityRequirements/
-│   └── requirementFile/
-│
-├── module/                    # Feature-based modules
-│   │
-│   ├── common/
-│   │   └── validation.ts      # Shared validation utilities
-│   │
-│   ├── Opportunity/
-│   │   ├── opportunity.controller.ts
-│   │   ├── opportunity.service.ts
-│   │   ├── opportunity.dto.ts
-│   │   └── opportunity.validation.ts
-│   │
-│   ├── Requirements/          # Requirements management module
-│   ├── RequirementFile/       # Requirement files module
-│   └── opportunity-analysis/  # AI analysis module
-│
-├── utils/                     # Shared utilities
-│   ├── AI/                    # AI prompts and helper functions
-│   ├── enum/                  # Application enums
-│   ├── error/                 # Custom exceptions and error handling
-│   ├── interfaces/            # Shared TypeScript interfaces
-│   ├── middleware/            # Express middlewares
-│   └── read-files-data/       # PDF, DOCX and TXT extraction utilities
-│
-├── app.controller.ts          # Express application configuration
-└── index.ts                   # Application entry point
-│
-uploads/                       # Uploaded requirement files
-│
-.env.example                   # Example environment variables
-Dockerfile                     # Docker image definition
-docker-compose.yml             # Multi-container setup
-package.json                   # Dependencies and scripts
-tsconfig.json                  # TypeScript configuration
-README.md                      # Project documentation
-```
-...
+Licensed under the ISC license.
